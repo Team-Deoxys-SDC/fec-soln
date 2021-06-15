@@ -1,0 +1,29 @@
+{
+    "parser": "@babel/eslint-parser",
+    "extends": [
+        "react"
+    ],
+    "env": {
+        "browser": true,
+        "node": true,
+        "jest": true,
+        "es6": true
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "rules": {
+        "indent": [
+            "error",
+            2
+        ]
+    },
+    "globals": {
+        "page": true,
+        "browser": true,
+        "context": true,
+        "jestPuppeteer": true
+    }
+}
