@@ -14,6 +14,7 @@ export default function Cart () {
   const uniqueSkus = new Set();
   const uniqueSizes = new Set();
 
+  // Generate unique list of skus to map over
   const skus = Object.entries(style.skus).filter(([id, sku]) => Boolean(
     uniqueSkus.add(id) && // track each sku id
     !uniqueSizes.has(sku.size) && // check whether we've seen this size
@@ -27,7 +28,7 @@ export default function Cart () {
     <div>
       <div style={{ display: 'flex', flexDirection: 'row' }} >
         {/* Size Selection */}
-        <div style={{ marginLeft: '1em', width: '50%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ width: '50%', display: 'flex', flexDirection: 'column' }}>
           <label htmlFor="size">{showSizes > 1 ? 'Please select a size' : 'Choose a size:'}</label>
           <select
             size={showSizes}
@@ -81,7 +82,7 @@ export default function Cart () {
                 headers: { 'Content-Type': 'application/json' }
               });
             }}
-            style={{ marginLeft: '1em', width: '50%' }}>
+            style={{ width: '50%' }}>
             Add to Bag
           </button>
         }
