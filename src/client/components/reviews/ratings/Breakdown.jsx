@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../../contexts';
-import { reviewsByRating } from '../../utils';
+import { AppContext } from '../../../contexts';
+import { reviewsByRating } from '../../../utils';
 
-export default function Ratings () {
+export default function Breakdown () {
   const { reviews, reviewStarFilters, setReviewStarFilters } = useContext(AppContext);
   const ratingsCount = reviewsByRating(reviews);
 

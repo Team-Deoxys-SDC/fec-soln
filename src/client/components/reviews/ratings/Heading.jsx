@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Stars from 'react-star-ratings';
-import { AppContext } from '../../contexts';
-import { averageRating } from '../../utils';
+import { AppContext } from '../../../contexts';
+import { averageRating } from '../../../utils';
 
 export default function Heading () {
   const { reviews } = useContext(AppContext);

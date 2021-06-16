@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../../contexts';
-import { productCharacteristics, toPercentage } from '../../utils';
+import { AppContext } from '../../../contexts';
+import { productCharacteristics, toPercentage } from '../../../utils';
 
 export default function Styles () {
   const { reviewMeta } = useContext(AppContext);

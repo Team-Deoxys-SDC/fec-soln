@@ -5,7 +5,7 @@ export default function Description () {
   const { product } = useContext(AppContext);
   return (
     <div style={{ display: 'flex', flexDirection: 'row', margin: '2%' }}>
-      <div style={{ width: '60%', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ width: '50%', display: 'flex', flexDirection: 'column' }}>
         <h3>{product.slogan}</h3>
         <p>{product.description}</p>
       </div>

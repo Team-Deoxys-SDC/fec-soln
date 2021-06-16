@@ -14,7 +14,7 @@ export function flattenStarFilters (starFilters) {
     .reverse();
 }
 
-export async function eventSetter (setter) {
+export function eventSetter (setter) {
   return function (event) {
     setter(event.target.value);
   };

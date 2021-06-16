@@ -1,22 +1,21 @@
 import React, { useContext } from 'react';
 
-import Styles from './Styles';
 import Heading from './Heading';
 import Filters from './Filters';
-import Ratings from './Ratings';
+import Breakdown from './Breakdown';
+import Characteristics from './Characteristics';
 
-import '../../style.css';
+import { AppContext } from '../../../contexts';
+import { toPercentage } from '../../../utils';
 
-import { AppContext } from '../../contexts';
-import { toPercentage } from '../../utils';
+import '../../../style.css';
 
-
-export default function Summary () {
+export default function Ratings () {
   const { reviews } = useContext(AppContext);
   const percentRecommend = toPercentage(reviews.filter(review => review.recommend).length, reviews.length);
 
   return (
-    <div style={{ width: '35%' }}>
+    <div>
       <Heading />
 
       {/* Recommenders */}
@@ -25,8 +24,8 @@ export default function Summary () {
       </div>
 
       <Filters />
-      <Ratings />
-      <Styles />
+      <Breakdown />
+      <Characteristics />
     </div>
   );
 }

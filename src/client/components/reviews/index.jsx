@@ -1,17 +1,17 @@
 import React from 'react';
 
-import Summary from './Summary';
-import ReviewList from './ReviewList';
-
+import Ratings from './ratings';
+import ReviewList from './list';
+import SplitScreen from '../layout/SplitScreen';
 
 export default function Reviews () {
   return (
-    <div style={{ margin: '2%' }}>
+    <div>
       <h1>Ratings & Reviews</h1>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <Summary />
+      <SplitScreen widths={[50, 50]}>
+        <Ratings />
         <ReviewList />
-      </div>
+      </SplitScreen>
     </div>
   );
 }

@@ -60,6 +60,7 @@ function App () {
     }}>
       <Header />
       <Overview />
+      <Reviews />
     </AppContext.Provider>
   );
 }

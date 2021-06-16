@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../../contexts';
-import { flattenStarFilters } from '../../utils';
+import { AppContext } from '../../../contexts';
+import { flattenStarFilters } from '../../../utils';
 
 export default function Filters () {
   const { reviewStarFilters, setReviewStarFilters } = useContext(AppContext);
