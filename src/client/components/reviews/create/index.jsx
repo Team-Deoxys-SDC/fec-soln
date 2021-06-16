@@ -1,18 +1,21 @@
 import React, { useContext, useRef, useState } from 'react';
 
+import { validateReview } from './utils';
 import { AppContext } from '../../../contexts';
 import Characteristics from './Characteristics';
 
+import User from './User';
+import Photos from './Photos';
 import Review from './Review';
 import Overall from './Overall';
 import Recommend from './Recommend';
-import Photos from './Photos';
-import User from './User';
 
 export default function CreateReview () {
   const dialog = useRef(null);
 
-  const { product } = useContext(AppContext);
+  const { product, reviewMeta, refetch } = useContext(AppContext);
+
+  const [errors, setErrors] = useState({});
 
   const [stars, setStars] = useState(3);
   const [email, setEmail] = useState('');
@@ -47,10 +50,20 @@ export default function CreateReview () {
           style={{ display: 'flex', flexDirection: 'column' }}
         >
           <Overall stars={stars} setStars={setStars} />
-          <Recommend recommended={recommended} setRecommended={setRecommended} />
-          <Characteristics characteristics={characteristics} setCharacteristics={setCharacteristics} />
+
+          <Recommend
+            recommended={recommended}
+            setRecommended={setRecommended}
+          />
+
+          <Characteristics
+            errors={errors}
+            characteristics={characteristics}
+            setCharacteristics={setCharacteristics}
+          />
 
           <Review
+            errors={errors}
             reviewBody={reviewBody}
             setReviewBody={setReviewBody}
             reviewSummary={reviewSummary}
@@ -65,13 +78,48 @@ export default function CreateReview () {
           />
 
           <User
+            errors={errors}
             email={email}
             setEmail={setEmail}
             nickname={nickname}
             setNickname={setNickname}
           />
 
-          <button style={{ marginTop: '1em' }}>Submit</button>
+          <button
+            onClick={async () => {
+              const review = {
+                product_id: product.id,
+                rating: stars,
+                summary: reviewSummary,
+                body: reviewBody,
+                recommend: recommended,
+                name: nickname,
+                email,
+                photos,
+                characteristics
+              };
+
+              const validation = validateReview(review, reviewMeta);
+
+              if (Object.keys(validation).length) {
+                setErrors(validation);
+                return;
+              }
+
+              await fetch('/api/reviews', {
+                method: 'POST',
+                body: JSON.stringify(review),
+                headers: { 'Content-Type': 'application/json' }
+              });
+
+              await refetch();
+
+              dialog.current.close();
+            }}
+            style={{ marginTop: '1em' }}
+          >
+            Submit
+          </button>
         </div>
       </dialog>
     </>

@@ -7,8 +7,8 @@ export default function Photos ({ photos, setPhotos, currentPhoto, setCurrentPho
       <h3>Upload Photos</h3>
       {Boolean(photos.length) && (
         <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '1em' }}>
-          {photos.map(photo => (
-            <img style={{ width: '100px', height: '100px', marginLeft: '0.5em' }} src={photo} />
+          {photos.map((photo, index) => (
+            <img key={photo + index} style={{ width: '100px', height: '100px', marginLeft: '0.5em' }} src={photo} />
           ))}
         </div>
       )}
@@ -26,6 +26,10 @@ export default function Photos ({ photos, setPhotos, currentPhoto, setCurrentPho
           <button
             style={{ marginTop: '1em', width: '20%' }}
             onClick={() => {
+              if (!currentPhoto) {
+                return;
+              }
+
               setPhotos(photos.concat(currentPhoto));
               setCurrentPhoto('');
             }}>
