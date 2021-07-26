@@ -6,7 +6,7 @@ export default function AnswerTile ({ answer }) {
     <div style={{ display: 'flex', flexDirection: 'column', paddingTop: '1em', paddingLeft: '1em' }}>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <strong>A: </strong>
-        <text style={{ marginLeft: '0.2em' }}>{answer.body}</text>
+        <div style={{ marginLeft: '0.2em' }}>{answer.body}</div>
       </div>
 
       {/* Photos */}

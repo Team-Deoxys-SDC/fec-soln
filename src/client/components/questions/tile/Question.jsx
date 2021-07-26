@@ -3,7 +3,7 @@ import Helpful from '../Helpful';
 import AnswerTile from './Answer';
 
 export default function QuestionTile ({ question }) {
-  const [answers, setAnswers] = useState(Object.values(question.answers));
+  const answers = Object.values(question.answers);
   const [displayCount, setDisplayCount] = useState(2);
 
   return (
@@ -19,7 +19,7 @@ export default function QuestionTile ({ question }) {
 
       <div style={{ overflow: 'auto', maxHeight: '400px' }}>
         {answers.slice(0, displayCount).map(answer => (
-          <AnswerTile answer={answer} />
+          <AnswerTile key={answer.id} answer={answer} />
         ))}
       </div>
 
@@ -31,7 +31,6 @@ export default function QuestionTile ({ question }) {
           <strong>{displayCount === answers.length ? 'HIDE' : 'SHOW MORE'} ANSWERS</strong>
         </small>
       )}
-
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouteMatch } from 'react-router';
 import { AppContext } from '../contexts';
 import { fetchEndpoint, getRandomInteger } from '../utils';
@@ -11,6 +11,8 @@ import Header from './layout/Header';
 function App () {
   const { params: { product: id } } = useRouteMatch();
 
+  // Global Modal
+  const modal = useRef(null);
 
   // Product state
   const [styles, setStyles] = useState();
@@ -51,6 +53,7 @@ function App () {
   return (
     <AppContext.Provider value={{
       userToken,
+      modal,
       styles, setStyles,
       reviews, setReviews,
       product, setProduct,
@@ -64,7 +67,7 @@ function App () {
       reviewStarFilters, setReviewStarFilters,
       refetch: () => setRefetch(Math.random())
     }}>
-      <div style={{ padding: '0 0' }}>
+      <div style={{ padding: '0 20%' }}>
         <Header />
         <Overview />
         <Questions />
