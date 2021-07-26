@@ -64,7 +64,7 @@ function App () {
       reviewStarFilters, setReviewStarFilters,
       refetch: () => setRefetch(Math.random())
     }}>
-      <div style={{ padding: '0 20%' }}>
+      <div style={{ padding: '0 0' }}>
         <Header />
         <Overview />
         <Questions />
