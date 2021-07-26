@@ -26,6 +26,9 @@ function App () {
   const [reviewsSortedBy, setReviewsSortedBy] = useState('relevant');
   const [reviewStarFilters, setReviewStarFilters] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false });
 
+  // QA State
+  const [questions, setQuestions] = useState();
+
   // User cookie state
   const [refetch, setRefetch] = useState();
   const [userToken] = useState(getRandomInteger());
@@ -34,13 +37,14 @@ function App () {
   useEffect(() => fetchEndpoint(`/api/products/${id}`).then(setProduct), []);
   useEffect(() => fetchEndpoint(`/api/reviews/meta?product_id=${id}`).then(setReviewMeta), []);
   useEffect(() => fetchEndpoint(`/api/products/${id}/styles`).then(styles => setStyles(styles.results)), []);
+  useEffect(() => fetchEndpoint(`/api/qa/questions?product_id=${id}&count=100`).then(setQuestions), []);
 
   useEffect(() => {
     fetchEndpoint(`/api/reviews?product_id=${id}&count=100000&sort=${reviewsSortedBy}`)
       .then(reviews => setReviews(reviews.results));
   }, [reviewsSortedBy, refetch]);
 
-  if (!styles || !product || !reviewMeta || !reviews) {
+  if (!styles || !product || !reviewMeta || !reviews || !questions) {
     return <div>Loading</div>;
   }
 
@@ -50,6 +54,7 @@ function App () {
       styles, setStyles,
       reviews, setReviews,
       product, setProduct,
+      questions, setQuestions,
       reviewMeta, setReviewMeta,
       fullCarousel, setFullCarousel,
       selectedStyle, setSelectedStyle,
@@ -59,10 +64,13 @@ function App () {
       reviewStarFilters, setReviewStarFilters,
       refetch: () => setRefetch(Math.random())
     }}>
-      <Header />
-      <Overview />
-      <Questions />
-      <Reviews />
+      <div style={{ padding: '0 20%' }}>
+        <Header />
+        <Overview />
+        <Questions />
+        <Reviews />
+      </div>
+
     </AppContext.Provider>
   );
 }
