@@ -27,8 +27,6 @@ export default function Footing ({ review }) {
       >
         Report
       </small>
-
-      <hr />
     </div>
   );
 }

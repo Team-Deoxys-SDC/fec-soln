@@ -46,6 +46,9 @@ export default function ReviewTile ({ review }) {
       </dialog>
 
       <Footing review={review} />
+
+      <hr />
+
     </div >
   );
 }

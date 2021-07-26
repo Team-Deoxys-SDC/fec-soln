@@ -8,7 +8,7 @@ const { API_URL, API_KEY } = require('./config');
 const app = express();
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../../dist')));
+app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
 
 // API proxy
 app.use('/api/*', async (req, res) => {

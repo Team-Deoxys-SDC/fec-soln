@@ -5,6 +5,7 @@ import { fetchEndpoint, getRandomInteger } from '../utils';
 
 import Reviews from './reviews';
 import Overview from './overview';
+import Questions from './questions';
 import Header from './layout/Header';
 
 function App () {
@@ -60,6 +61,7 @@ function App () {
     }}>
       <Header />
       <Overview />
+      <Questions />
       <Reviews />
     </AppContext.Provider>
   );
