@@ -16,7 +16,7 @@ export default function QuestionsAndAnswers ({ questions }) {
   return (
     <>
       {/* Question List */}
-      <ScrollableList>
+      <ScrollableList style={{ maxHeight: '400px' }}>
         {questions.slice(0, displayCount).map(question => (
           <QuestionTile key={question.question_id} question={question} />
         ))}

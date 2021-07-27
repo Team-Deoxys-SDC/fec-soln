@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 
-export default function Modal ({ children, showModal, onClick }) {
+export default function Modal ({ style = {}, children, showModal, onClick }) {
   const modal = useRef(null);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function Modal ({ children, showModal, onClick }) {
   return (
     <dialog
       className="modal"
-      style={{ width: '60%', height: '80%' }}
+      style={{ width: '60%', height: '80%', ...style }}
       onClick={onClick}
       ref={modal}
     >

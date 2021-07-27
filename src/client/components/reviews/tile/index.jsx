@@ -11,14 +11,6 @@ import Footing from './Footing';
 export default function ReviewTile ({ review }) {
   const dialog = useRef(null);
 
-  const [imageUrl, setImageUrl] = useState('');
-  const [imageDims, setImageDims] = useState({});
-
-  const [modalOrientation, imageOrientation] = imageDims.width > imageDims.height ?
-    [{ width: '70%' }, { maxWidth: '100%', height: 'auto' }] :
-    [{ height: '70%' }, { maxHeight: '100%', width: 'auto' }];
-
-
   return (
     <div style={{ marginTop: '2em' }}>
       <Heading review={review} />

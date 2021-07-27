@@ -40,11 +40,12 @@ export default function ReviewList () {
         </select>
       </h4>
 
-      <ScrollableList
-        maxHeight="400px"
-        list={filteredReviews.slice(0, displayCount)}
-        tile={ReviewTile}
-      />
+      {/* Review List */}
+      <ScrollableList style={{ maxHeight: '400px' }}>
+        {filteredReviews.slice(0, displayCount).map(review => (
+          <ReviewTile key={review.id} review={review} />
+        ))}
+      </ScrollableList>
 
       {/* Buttons */}
       <div style={{ display: 'flex', flexDirection: 'row' }}>
