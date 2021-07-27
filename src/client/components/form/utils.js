@@ -2,7 +2,7 @@ import { validate as validateEmail } from "email-validator";
 
 const errorMessage = "You must enter the following";
 
-export function validateReview ({
+export function validateResource ({
   email, name: nickname, body: reviewBody, summary: reviewSummary, characteristics
 }, reviewMeta) {
   const errors = {};

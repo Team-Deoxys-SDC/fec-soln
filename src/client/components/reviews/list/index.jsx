@@ -1,18 +1,18 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 
 import { AppContext } from '../../../contexts';
 import { flattenStarFilters } from '../../../utils';
 
-import Heading from './Heading';
-import ShowMore from './ShowMore';
 import ReviewTile from '../tile';
 import CreateReview from '../create';
+import ScrollableList from '../../layout/Scrollable';
+import ReviewButtons from './Buttons';
+import ReviewListHeading from './Heading';
 
 export default function ReviewList () {
-  const reviewList = useRef(null);
+  const [showModal, setShowModal] = useState(2);
   const [displayCount, setDisplayCount] = useState(2);
-
   const { reviews, reviewStarFilters } = useContext(AppContext);
 
   // Handle rating filters
@@ -21,30 +21,24 @@ export default function ReviewList () {
   // Filter reviews
   const filteredReviews = reviews.filter(review => !ratingFilters.size || ratingFilters.has(review.rating));
 
-  // Scroll latest review into view
-  useEffect(() => {
-    reviewList.current.scrollTop = reviewList.current.scrollHeight;
-  }, [displayCount]);
-
   return (
     <div>
-      <Heading reviewCount={filteredReviews.length} />
+      <ReviewListHeading reviewCount={filteredReviews.length} />
 
-      <div ref={reviewList} style={{ overflow: 'auto', height: '400px' }}>
-        {filteredReviews
-          .slice(0, displayCount)
-          .map(review => <ReviewTile key={review.review_id} review={review} />)}
-      </div>
+      <ScrollableList
+        maxHeight="400px"
+        list={filteredReviews.slice(0, displayCount)}
+        tile={ReviewTile}
+      />
 
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <ShowMore
-          reviewCount={filteredReviews.length}
-          displayCount={displayCount}
-          setDisplayCount={setDisplayCount}
-        />
+      <ReviewButtons
+        setShowModal={setShowModal}
+        reviewCount={filteredReviews.length}
+        displayCount={displayCount}
+        setDisplayCount={setDisplayCount}
+      />
 
-        <CreateReview />
-      </div>
+      <CreateReview showModal={showModal} />
     </div>
   );
 }

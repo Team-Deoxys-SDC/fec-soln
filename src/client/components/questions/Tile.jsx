@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Helpful from '../Helpful';
+import Helpful from './Helpful';
 import AnswerTile from './Answer';
 
 export default function QuestionTile ({ question }) {

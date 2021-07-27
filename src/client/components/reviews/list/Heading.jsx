@@ -2,9 +2,8 @@ import React, { useContext } from 'react';
 import { AppContext } from '../../../contexts';
 import { eventSetter } from '../../../utils';
 
-export default function Heading ({ reviewCount }) {
+export default function ReviewListHeading ({ reviewCount }) {
   const { reviewsSortedBy, setReviewsSortedBy } = useContext(AppContext);
-
   return (
     <h4 style={{ margin: 0 }}>{reviewCount} reviews, sorted by
       {' '}
