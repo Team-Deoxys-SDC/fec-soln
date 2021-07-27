@@ -1,20 +1,27 @@
-import React from 'react';
-import { eventSetter } from '../../../utils';
+import React, { useEffect } from 'react';
 
-export default function Question ({ errors, question, setQuestion }) {
+export default function Question ({ errors, setErrors, formData, setFormData }) {
+  const { body } = formData;
+
+  useEffect(() => {
+    if (body) return;
+
+    setErrors({ body: "This field is required" });
+  }, [body]);
+
   return (
     <>
       <h3>Your Question*</h3>
-      <small style={{ color: 'red' }}>{errors.question}</small>
+      {errors.show && <small style={{ color: 'red' }}>{errors.question}</small>}
       <textarea
         style={{ width: '100%', height: '10%', fontSize: '1.25em' }}
-        value={question}
+        value={body}
         placeholder="What would you like to know?"
-        onChange={eventSetter(setQuestion)}
+        onChange={(event) => setFormData({ ...formData, body: event.target.value })}
       />
 
-      {Boolean(question.length) && (
-        <small style={{ marginTop: '0.3em' }}>Characters remaining: {1000 - question.length}</small>
+      {Boolean(body.length) && (
+        <small style={{ marginTop: '0.3em' }}>Characters remaining: {1000 - body.length}</small>
       )}
     </>
   );

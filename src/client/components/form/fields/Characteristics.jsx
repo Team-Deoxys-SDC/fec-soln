@@ -3,9 +3,9 @@ import { AppContext } from '../../../contexts';
 import { productCharacteristics } from '../../../utils';
 
 
-export default function Characteristics ({ state, setState, errors, setErrors }) {
+export default function Characteristics ({ formData, setFormData, errors, setErrors }) {
   const { reviewMeta } = useContext(AppContext);
-  const { characteristics } = state;
+  const { characteristics } = formData;
 
   useEffect(() => {
     if (Object.keys(characteristics).length === Object.keys(reviewMeta.characteristics).length) {
@@ -13,7 +13,7 @@ export default function Characteristics ({ state, setState, errors, setErrors })
     }
 
     setErrors({ characteristics: "This field is required" });
-  }, [state]);
+  }, [characteristics]);
 
   return (
     <>
@@ -38,12 +38,9 @@ export default function Characteristics ({ state, setState, errors, setErrors })
                     type="radio"
                     checked={characteristics[id] === (index + 1)}
                     onChange={() => {
-                      setState({
-                        ...state,
-                        characteristics: {
-                          ...characteristics,
-                          [id]: (index + 1)
-                        }
+                      setFormData({
+                        ...formData,
+                        characteristics: { ...characteristics, [id]: index + 1 }
                       });
                     }}
                   />

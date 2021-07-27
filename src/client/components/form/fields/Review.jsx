@@ -1,26 +1,44 @@
-import React from 'react';
-import { eventSetter } from '../../../utils';
+import React, { useEffect } from 'react';
 
-export default function Review ({ errors, reviewSummary, setReviewSummary, reviewBody, setReviewBody }) {
+export default function Review ({ errors, setErrors, formData, setFormData }) {
+  const { summary, body } = formData;
+
+  useEffect(() => {
+    if (!body) {
+      setErrors({ body: "This field is required" });
+      return;
+    }
+
+    if (!summary) {
+      setErrors({ summary: "This field is required" });
+    }
+
+    if (body.length < 50) {
+      setErrors({ body: 'Your review must be longer than 50 characters' });
+      return;
+    }
+  }, [body, summary]);
+
+
   return (
     <>
       <h3>Review Summary*</h3>
-      <small style={{ color: 'red' }}>{errors.reviewSummary}</small>
+      {errors.show && <small style={{ color: 'red' }}>{errors.summary}</small>}
       <input
         placeholder="Please input a summary of your review"
-        value={reviewSummary}
-        onChange={eventSetter(setReviewSummary)}
+        value={summary}
+        onChange={(event) => setFormData({ ...formData, summary: event.target.value })}
       />
 
       <h3>Review Body*</h3>
-      <small style={{ color: 'red' }}>{errors.reviewBody}</small>
+      {errors.show && <small style={{ color: 'red' }}>{errors.body}</small>}
       <textarea
-        value={reviewBody}
+        value={body}
         placeholder="Please review the product"
-        onChange={eventSetter(setReviewBody)}
+        onChange={(event) => setFormData({ ...formData, body: event.target.value })}
       />
-      {reviewBody.length < 50 && (
-        <small style={{ marginTop: '0.3em' }}>Minimum required characters left: {50 - reviewBody.length}</small>
+      {body.length < 50 && (
+        <small style={{ marginTop: '0.3em' }}>Minimum required characters left: {50 - body.length}</small>
       )}
     </>
   );

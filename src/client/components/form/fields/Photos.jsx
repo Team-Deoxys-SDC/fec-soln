@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { eventSetter } from '../../../utils';
 
-export default function Photos ({ photos, setPhotos, currentPhoto, setCurrentPhoto }) {
+export default function Photos ({ formData, setFormData }) {
+  const { photos } = formData;
+  const [currentPhoto, setCurrentPhoto] = useState('');
+
   return (
     <>
       <h3>Upload Photos</h3>
       {Boolean(photos.length) && (
         <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '1em' }}>
           {photos.map((photo, index) => (
-            <img key={photo + index} style={{ width: '100px', height: '100px', marginLeft: '0.5em' }} src={photo} />
+            <img
+              key={photo + index}
+              style={{ width: '100px', height: '100px', marginLeft: '0.5em' }}
+              src={photo}
+            />
           ))}
         </div>
       )}
@@ -30,7 +37,7 @@ export default function Photos ({ photos, setPhotos, currentPhoto, setCurrentPho
                 return;
               }
 
-              setPhotos(photos.concat(currentPhoto));
+              setFormData({ ...formData, photos: photos.concat(currentPhoto) });
               setCurrentPhoto('');
             }}>
             Add Photo
