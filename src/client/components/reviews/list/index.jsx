@@ -1,19 +1,25 @@
 import React, { useContext, useState } from 'react';
 
-
 import { AppContext } from '../../../contexts';
 import { flattenStarFilters } from '../../../utils';
 
 import ReviewTile from '../tile';
-import CreateReview from '../create';
 import ScrollableList from '../../layout/Scrollable';
 import ReviewButtons from './Buttons';
 import ReviewListHeading from './Heading';
+import CreateFormModal from '../../form';
+
+import User from '../../form/fields/User';
+import Photos from '../../form/fields/Photos';
+import Review from '../../form/fields/Review';
+import Overall from '../../form/fields/Overall';
+import Recommend from '../../form/fields/Recommend';
+import Characteristics from '../../form/fields/Characteristics';
 
 export default function ReviewList () {
   const [showModal, setShowModal] = useState(2);
   const [displayCount, setDisplayCount] = useState(2);
-  const { reviews, reviewStarFilters } = useContext(AppContext);
+  const { reviews, reviewStarFilters, product } = useContext(AppContext);
 
   // Handle rating filters
   const ratingFilters = new Set(flattenStarFilters(reviewStarFilters));
@@ -38,7 +44,26 @@ export default function ReviewList () {
         setDisplayCount={setDisplayCount}
       />
 
-      <CreateReview showModal={showModal} />
+      <CreateFormModal
+        title="Write your Review"
+        subtitle={`... about the ${product.name}`}
+        endpoint="/api/reviews"
+        data={{
+          body: '',
+          name: '',
+          email: '',
+          rating: 3,
+          photos: [],
+          summary: '',
+          recommend: true,
+          characteristics: {},
+          product_id: product.id
+        }}
+        showModal={showModal}
+        onClick={() => setShowModal(false)}
+        onSubmit={() => setShowModal(false)}
+        fields={[Overall, Recommend, Characteristics, Review, Photos, User]}
+      />
     </div>
   );
 }

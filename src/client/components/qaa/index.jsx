@@ -1,14 +1,17 @@
 import React, { useContext, useState } from 'react';
 
+import CreateFormModal from '../form';
 import QuestionTile from './tile/Question';
 import { AppContext } from '../../contexts';
-import CreateQuestionModal from './create';
+
+import User from '../form/fields/User';
+import Question from '../form/fields/Question';
+
 
 export default function Questions () {
-  const { questions } = useContext(AppContext);
+  const { questions, product } = useContext(AppContext);
   const [showModal, setShowModal] = useState(false);
   const [displayCount, setDisplayCount] = useState(4);
-
 
   return (
     <>
@@ -47,9 +50,15 @@ export default function Questions () {
       </div>
 
       {/* Add a Question */}
-      <CreateQuestionModal
+      <CreateFormModal
+        title="Ask Your Question"
+        subtitle={`.. about the ${product.name}`}
+        endpoint="/qa/questions"
         showModal={showModal}
         onClick={() => setShowModal(false)}
+        onSubmit={() => setShowModal(false)}
+        fields={[Question, User]}
+        data={{ body: '', email: '', name: '' }}
       />
     </>
   );

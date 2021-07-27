@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-export default function Question ({ errors, setErrors, formData, setFormData }) {
+export default function Answer ({ errors, setErrors, formData, setFormData }) {
   const { body } = formData;
 
   useEffect(() => {
@@ -11,12 +11,12 @@ export default function Question ({ errors, setErrors, formData, setFormData }) 
 
   return (
     <>
-      <h3>Your Question*</h3>
+      <h3>Your Answer*</h3>
       {errors.show && <small style={{ color: 'red' }}>{errors.body}</small>}
       <textarea
         style={{ width: '100%', height: '10%', fontSize: '1.25em' }}
         value={body}
-        placeholder="What would you like to know?"
+        placeholder="Please, what is the answer?"
         onChange={(event) => setFormData({ ...formData, body: event.target.value })}
       />
 
