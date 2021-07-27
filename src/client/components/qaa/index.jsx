@@ -1,17 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
-import CreateFormModal from '../form';
-import QuestionTile from './tile/Question';
+import QuestionList from './list';
 import { AppContext } from '../../contexts';
 
-import User from '../form/fields/User';
-import Question from '../form/fields/Question';
-
-
-export default function Questions () {
-  const { questions, product } = useContext(AppContext);
-  const [showModal, setShowModal] = useState(false);
-  const [displayCount, setDisplayCount] = useState(4);
+export default function QuestionsAndAnswers () {
+  const { questions } = useContext(AppContext);
 
   return (
     <>
@@ -28,38 +21,7 @@ export default function Questions () {
       />
 
       {/* Question List */}
-      <div style={{ display: 'flex', flexDirection: 'column', overflow: 'auto', maxHeight: '600px' }}>
-        {questions.results.slice(0, displayCount).map(question => (
-          <QuestionTile key={question.question_id} question={question} />
-        ))}
-      </div>
-
-      {/* Buttons */}
-      <div style={{ display: 'flex', flexDirection: 'row', padding: '2em' }}>
-        {questions.results.length > 2 && (
-          <button onClick={() => setDisplayCount(displayCount + 2)}>
-            More Answered Questions
-          </button>
-        )}
-        <button
-          style={{ marginLeft: '1em', height: '30px' }}
-          onClick={() => setShowModal(true)}
-        >
-          Add a Question
-        </button>
-      </div>
-
-      {/* Add a Question */}
-      <CreateFormModal
-        title="Ask Your Question"
-        subtitle={`.. about the ${product.name}`}
-        endpoint="/qa/questions"
-        showModal={showModal}
-        onClick={() => setShowModal(false)}
-        onSubmit={() => setShowModal(false)}
-        fields={[Question, User]}
-        data={{ body: '', email: '', name: '' }}
-      />
+      <QuestionList questions={questions} />
     </>
   );
 }

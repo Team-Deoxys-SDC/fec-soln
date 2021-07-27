@@ -5,10 +5,8 @@ import { flattenStarFilters } from '../../../utils';
 
 import ReviewTile from '../tile';
 import ScrollableList from '../../layout/Scrollable';
-import ReviewButtons from './Buttons';
-import ReviewListHeading from './Heading';
-import CreateFormModal from '../../form';
 
+import CreateFormModal from '../../form';
 import User from '../../form/fields/User';
 import Photos from '../../form/fields/Photos';
 import Review from '../../form/fields/Review';
@@ -19,7 +17,7 @@ import Characteristics from '../../form/fields/Characteristics';
 export default function ReviewList () {
   const [showModal, setShowModal] = useState(2);
   const [displayCount, setDisplayCount] = useState(2);
-  const { reviews, reviewStarFilters, product } = useContext(AppContext);
+  const { reviews, reviewStarFilters, product, reviewsSortedBy, setReviewsSortedBy } = useContext(AppContext);
 
   // Handle rating filters
   const ratingFilters = new Set(flattenStarFilters(reviewStarFilters));
@@ -29,7 +27,18 @@ export default function ReviewList () {
 
   return (
     <div>
-      <ReviewListHeading reviewCount={filteredReviews.length} />
+      {/* Heading */}
+      <h4 style={{ margin: 0 }}>{filteredReviews.length} reviews, sorted by
+        {' '}
+        <select
+          value={reviewsSortedBy}
+          onChange={(event) => setReviewsSortedBy(event.target.value)}
+        >
+          <option value="relevant">relevant</option>
+          <option value="newest">newest</option>
+          <option value="helpful">helpful</option>
+        </select>
+      </h4>
 
       <ScrollableList
         maxHeight="400px"
@@ -37,12 +46,23 @@ export default function ReviewList () {
         tile={ReviewTile}
       />
 
-      <ReviewButtons
-        setShowModal={setShowModal}
-        reviewCount={filteredReviews.length}
-        displayCount={displayCount}
-        setDisplayCount={setDisplayCount}
-      />
+      {/* Buttons */}
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        {displayCount < filteredReviews.length && (
+          <button
+            onClick={() => setDisplayCount(displayCount + 2)}
+            style={{ marginRight: '1em', width: '30%', height: '30px' }}>
+            More Reviews
+          </button>
+        )}
+
+        <button
+          onClick={() => setShowModal(true)}
+          style={{ width: '30%', height: '30px' }}
+        >
+          Add a Review +
+        </button>
+      </div>
 
       <CreateFormModal
         title="Write your Review"

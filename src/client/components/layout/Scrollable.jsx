@@ -1,18 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-export default function ScrollableList ({ list }) {
-  const scrollableList = useRef(null);
+export default function ScrollableList ({ style, children }) {
+  const list = useRef(null);
 
   // Scroll latest review into view
   useEffect(() => {
     list.current.scrollTop = list.current.scrollHeight;
-  }, [list.length]);
+  }, [children]);
 
   return (
-    <div ref={reviewList} style={{ overflow: 'auto', height: '400px' }}>
-      {filteredReviews
-        .slice(0, displayCount)
-        .map(review => <ReviewTile key={review.review_id} review={review} />)}
+    <div ref={list} style={{ overflow: 'auto', ...style }}>
+      {children}
     </div>
   );
 }
