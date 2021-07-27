@@ -1,46 +1,54 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
+import Stars from 'react-star-ratings';
+import { FaCheck } from 'react-icons/fa';
+import moment from 'moment';
 
-import Heading from './Heading';
-import Response from './Response';
-import Recommend from './Recommend';
-
-import '../../../style.css';
-import Photos from './Photos';
+import Photos from '../../photos';
 import Footing from './Footing';
 
 export default function ReviewTile ({ review }) {
-  const dialog = useRef(null);
-
   return (
     <div style={{ marginTop: '2em' }}>
-      <Heading review={review} />
+      {/* Heading */}
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Stars
+          rating={review.rating}
+          starDimension="1em"
+          starSpacing="0.1em"
+        />
+        <small>
+          {review.reviewer_name}
+          {' - '}
+          {moment(review.date).format('MMMM DD, YYYY')}
+        </small>
+      </div>
 
+      {/* Body */}
       <h3>{review.summary}</h3>
       <p>{review.body}</p>
 
-      <Recommend review={review} />
-      <Response review={review} />
+      {/* Recommend */}
+      {review.recommend && (
+        <div style={{ display: 'flex', flexDirection: 'row', marginTop: '1em' }}>
+          <FaCheck />
+          <div style={{ marginLeft: '0.3em' }}>I recommend this product</div>
+        </div>
+      )}
 
-      <Photos
-        review={review}
-        dialog={dialog}
-        setImageUrl={setImageUrl}
-        setImageDims={setImageDims}
-      />
+      {/* Response */}
+      {review.response && (
+        <div style={{ background: 'lightgray', padding: '1em', marginTop: '0.5em' }}>
+          <strong>Response:</strong>
+          <p style={{ marginTop: '1em' }}>{review.response}</p>
+        </div>
+      )}
 
-      <dialog
-        ref={dialog}
-        onClick={() => dialog.current.close()}
-        style={modalOrientation}
-        className="modal"
-      >
-        <img src={imageUrl} style={imageOrientation} />
-      </dialog>
+      {/* Photos */}
+      <Photos photos={review.photos} />
 
+      {/* Footing */}
       <Footing review={review} />
-
       <hr />
-
     </div >
   );
 }
