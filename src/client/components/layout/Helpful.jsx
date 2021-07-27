@@ -1,31 +1,24 @@
-import React, { useContext } from 'react';
-import { AppContext } from '../../../contexts';
+import React from 'react';
 
-export default function Footing ({ review }) {
-  const { refetch } = useContext(AppContext);
-
+export default function Helpful ({
+  resource, onHelpfulClick, onActionClick, action
+}) {
   return (
     <div style={{ marginTop: '1em', display: 'flex', flexDirection: 'row' }}>
       <small>Helpful?</small>
       <small
-        onClick={async () => {
-          await fetch(`/api/reviews/${review.review_id}/helpful`, { method: 'PUT' });
-          refetch();
-        }}
+        onClick={onHelpfulClick}
         style={{ marginLeft: '1em', textDecoration: 'underline', cursor: 'pointer' }}
       >
         Yes
       </small>
-      <small style={{ marginLeft: '0.3em' }}>({review.helpfulness})</small>
+      <small style={{ marginLeft: '0.3em' }}>({resource.helpfulness})</small>
       <small style={{ marginLeft: '0.5em' }}>|</small>
       <small
-        onClick={async () => {
-          await fetch(`/api/reviews/${review.review_id}/report`, { method: 'PUT' });
-          refetch();
-        }}
+        onClick={onActionClick}
         style={{ marginLeft: '1em', textDecoration: 'underline', cursor: 'pointer' }}
       >
-        Report
+        {action}
       </small>
     </div>
   );
