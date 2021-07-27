@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Stars from 'react-star-ratings';
 import { FaCheck } from 'react-icons/fa';
 import moment from 'moment';
 
 import Photos from '../../photos';
-import Footing from './Footing';
+import Helpful from '../../layout/Helpful';
+import { AppContext } from '../../../contexts';
 
 export default function ReviewTile ({ review }) {
+  const { refetch } = useContext(AppContext);
+
   return (
     <div style={{ marginTop: '2em' }}>
       {/* Heading */}
@@ -47,7 +50,22 @@ export default function ReviewTile ({ review }) {
       <Photos photos={review.photos} />
 
       {/* Footing */}
-      <Footing review={review} />
+      <Helpful
+        resource={review}
+        action="Report"
+        onActionClick={async () => {
+          await fetch(`/api/reviews/${review.review_id}/report`, {
+            method: 'PUT'
+          });
+          refetch();
+        }}
+        onHelpfulClick={async () => {
+          await fetch(`/api/reviews/${review.review_id}/helpful`, {
+            method: 'PUT'
+          });
+          refetch();
+        }}
+      />
       <hr />
     </div >
   );
