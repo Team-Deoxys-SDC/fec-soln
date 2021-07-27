@@ -1,33 +1,31 @@
 import React, { useContext, useState } from 'react';
 
 import Modal from '../layout/Modal';
-import { validateResource } from './utils';
+import { validate } from './utils';
 import { AppContext } from '../../../contexts';
 
-export default function CreateModal ({
-  showModal, onClick, onSubmit, title, subtitle, children, endpoint
+export default function CreateFormModal ({
+  showModal, onClick, onSubmit, title, subtitle, fields, endpoint, state, setState
 }) {
-  const { product, refetch } = useContext(AppContext);
-
-  const [state, setState] = useState({});
+  const { refetch } = useContext(AppContext);
   const [errors, setErrors] = useState({});
 
   return (
-    <Modal>
-      <h1>{title}</h1>
-      <h3>{subtitle}</h3>
-
+    <Modal showModal={showModal} onClick={onClick}>
       <div
         onClick={(event) => event.stopPropagation()}
         style={{ display: 'flex', flexDirection: 'column' }}
       >
-        {children({ state, setState, errors, setErrors })}
+        <h1>{title}</h1>
+        <h3>{subtitle}</h3>
+
+        {fields.map((Field, index) => (
+          <Field key={index} errors={errors} state={state} setState={setState} />
+        ))}
 
         <button
           onClick={async () => {
-            const resource = { product_id: product.id, state };
-
-            const validation = validateResource(resource);
+            const validation = validate(state);
 
             if (Object.keys(validation).length) {
               setErrors(validation);
@@ -36,7 +34,7 @@ export default function CreateModal ({
 
             await fetch(endpoint, {
               method: 'POST',
-              body: JSON.stringify(resource),
+              body: JSON.stringify(state),
               headers: { 'Content-Type': 'application/json' }
             });
 
