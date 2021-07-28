@@ -31,7 +31,7 @@ export default function Photos ({ formData, setFormData }) {
             pattern="https://.*"
             placeholder="https://example-image.com"
             value={currentPhoto}
-            onChange={eventSetter(setCurrentPhoto)}
+            onChange={(event) => setCurrentPhoto(event.target.value)}
           />
           <button
             style={{ marginTop: '1em', width: '20%' }}

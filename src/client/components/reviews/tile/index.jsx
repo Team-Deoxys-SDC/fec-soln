@@ -52,7 +52,7 @@ export default function ReviewTile ({ review }) {
 
       {/* Footing */}
       <Helpful
-        resource={review}
+        value={review.helpfulness}
         action="Report"
         onActionClick={async () => {
           await fetch(`/api/reviews/${review.review_id}/report`, {

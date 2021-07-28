@@ -18,7 +18,13 @@ export default function CreateFormModal ({
         <h3>{subtitle}</h3>
 
         {fields.map((Field, index) => (
-          <Field key={index} errors={errors} formData={formData} setState={setFormData} />
+          <Field
+            key={index}
+            errors={errors}
+            setErrors={setErrors}
+            formData={formData}
+            setFormData={setFormData}
+          />
         ))}
 
         <button

@@ -44,7 +44,7 @@ export default function ReviewList () {
       {/* Review List */}
       <ScrollableList style={{ maxHeight: '400px' }}>
         {filteredReviews.slice(0, displayCount).map(review => (
-          <ReviewTile key={review.id} review={review} />
+          <ReviewTile key={review.review_id} review={review} />
         ))}
       </ScrollableList>
 

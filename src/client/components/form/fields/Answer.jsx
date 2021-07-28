@@ -20,7 +20,7 @@ export default function Answer ({ errors, setErrors, formData, setFormData }) {
         onChange={(event) => setFormData({ ...formData, body: event.target.value })}
       />
 
-      {Boolean(body.length) && (
+      {body.length > 0 && (
         <small style={{ marginTop: '0.3em' }}>Characters remaining: {1000 - body.length}</small>
       )}
     </>

@@ -14,12 +14,6 @@ export function flattenStarFilters (starFilters) {
     .reverse();
 }
 
-export function eventSetter (setter) {
-  return function (event) {
-    setter(event.target.value);
-  };
-}
-
 export async function fetchEndpoint (endpoint) {
   const response = await fetch(endpoint, { cache: 'reload' });
   return response.json();

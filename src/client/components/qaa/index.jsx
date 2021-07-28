@@ -21,7 +21,7 @@ export default function QuestionsAndAnswers () {
       />
 
       {/* Question List */}
-      <QuestionList questions={questions} />
+      <QuestionList questions={questions.results} />
     </>
   );
 }

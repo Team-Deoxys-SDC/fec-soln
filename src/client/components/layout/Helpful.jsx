@@ -1,7 +1,7 @@
 import React from 'react';
 import Row from './Row';
 
-export default function Helpful ({ resource, onHelpfulClick, onActionClick, action }) {
+export default function Helpful ({ value, onHelpfulClick, onActionClick, action }) {
   return (
     <Row style={{ marginTop: '1em' }}>
       <small>Helpful?</small>
@@ -11,7 +11,7 @@ export default function Helpful ({ resource, onHelpfulClick, onActionClick, acti
       >
         Yes
       </small>
-      <small style={{ marginLeft: '0.3em' }}>({resource.helpfulness})</small>
+      <small style={{ marginLeft: '0.3em' }}>({value})</small>
       <small style={{ marginLeft: '0.5em' }}>|</small>
       <small
         onClick={onActionClick}

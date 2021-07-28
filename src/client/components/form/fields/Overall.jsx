@@ -14,7 +14,7 @@ export default function Overall ({ formData, setFormData }) {
           rating={rating}
           starDimension="1em"
           starSpacing="0.1em"
-          changeRating={setFormData({ ...formData, rating })}
+          changeRating={(rating) => setFormData({ ...formData, rating })}
         />
         <small style={{ marginLeft: '1em' }}>{starDescriptions[rating]}</small>
       </Row>

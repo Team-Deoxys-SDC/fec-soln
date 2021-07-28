@@ -10,7 +10,7 @@ import User from '../../../form/fields/User';
 import Question from '../../../form/fields/Question';
 import CreateFormModal from '../../../form';
 
-export default function QuestionsAndAnswers ({ questions }) {
+export default function QuestionList ({ questions }) {
   const { product } = useContext(AppContext);
   const [showModal, setShowModal] = useState(false);
   const [displayCount, setDisplayCount] = useState(4);
