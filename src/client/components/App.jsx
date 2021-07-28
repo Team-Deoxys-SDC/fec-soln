@@ -5,7 +5,7 @@ import { fetchEndpoint, getRandomInteger } from '../utils';
 
 import Reviews from './reviews';
 import Overview from './overview';
-import Questions from './questions';
+import QuestionsAndAnswers from './qaa';
 import Header from './layout/Header';
 
 function App () {
@@ -70,7 +70,7 @@ function App () {
       <div style={{ padding: '0 20%' }}>
         <Header />
         <Overview />
-        <Questions />
+        <QuestionsAndAnswers />
         <Reviews />
       </div>
 

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 
 import Modal from '../layout/Modal';
-import { AppContext } from '../../../contexts';
+import { AppContext } from '../../contexts';
 import Column from '../layout/Column';
 
 export default function CreateFormModal ({

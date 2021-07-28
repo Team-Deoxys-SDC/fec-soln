@@ -4,7 +4,7 @@ import { AppContext } from '../../../contexts';
 import { flattenStarFilters } from '../../../utils';
 
 import ReviewTile from '../tile';
-import ScrollableList from '../../layout/Scrollable';
+import ScrollableList from '../../layout/ScrollableList';
 
 import CreateFormModal from '../../form';
 import User from '../../form/fields/User';

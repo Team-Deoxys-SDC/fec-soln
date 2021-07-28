@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import QuestionList from './list';
+import QuestionList from './question/list';
 import { AppContext } from '../../contexts';
 
 export default function QuestionsAndAnswers () {

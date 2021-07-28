@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react';
 
-import CreateFormModal from '../form';
-import QuestionTile from './tile/Question';
-import { AppContext } from '../../contexts';
+import QuestionTile from '..';
+import { AppContext } from '../../../../contexts';
 
-import User from '../form/fields/User';
-import Question from '../form/fields/Question';
-import ScrollableList from '../../layout/Scrollable';
 import Row from '../../../layout/Row';
+import ScrollableList from '../../../layout/ScrollableList';
+
+import User from '../../../form/fields/User';
+import Question from '../../../form/fields/Question';
+import CreateFormModal from '../../../form';
 
 export default function QuestionsAndAnswers ({ questions }) {
   const { product } = useContext(AppContext);
