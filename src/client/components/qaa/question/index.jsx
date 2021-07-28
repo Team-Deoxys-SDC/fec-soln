@@ -15,7 +15,7 @@ import Column from '../../layout/Column';
 export default function QuestionTile ({ question }) {
   const answers = Object.values(question.answers);
   const [showModal, setShowModal] = useState(false);
-  const { product } = useContext(AppContext);
+  const { product, refetch } = useContext(AppContext);
 
   return (
     <Column style={{ marginTop: '1em' }}>
@@ -35,12 +35,14 @@ export default function QuestionTile ({ question }) {
       <CreateFormModal
         title="Submit Your Answer"
         subtitle={`${product.name}: ${question.body}`}
-        data={{ name: '', email: '', body: '', photos: [] }}
         endpoint={`/qa/questions/${question.question_id}/answers`}
         fields={[Answer, User, Photos]}
         showModal={showModal}
         onClick={() => { setShowModal(false); }}
-        onSubmit={() => { setShowModal(false); }}
+        onSubmit={async () => {
+          setShowModal(false);
+          await refetch();
+        }}
       />
 
       {/* Answer List */}

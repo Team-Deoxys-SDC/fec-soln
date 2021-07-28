@@ -4,17 +4,17 @@ import { productCharacteristics } from '../../../utils';
 import Column from '../../layout/Column';
 
 import Row from '../../layout/Row';
+import { REQUIRED_FIELD, validate } from '../utils';
 
 export default function Characteristics ({ formData, setFormData, errors, setErrors }) {
   const { reviewMeta } = useContext(AppContext);
   const { characteristics } = formData;
 
   useEffect(() => {
-    if (Object.keys(characteristics).length === Object.keys(reviewMeta.characteristics).length) {
-      return;
-    }
-
-    setErrors({ ...errors, characteristics: "This field is required" });
+    validate(formData, errors, setErrors, 'characteristics', REQUIRED_FIELD, (field) => {
+      return Object.keys(field).length ===
+        Object.keys(reviewMeta.characteristics).length;
+    });
   }, [characteristics]);
 
   return (

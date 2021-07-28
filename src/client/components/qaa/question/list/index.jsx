@@ -11,7 +11,7 @@ import Question from '../../../form/fields/Question';
 import CreateFormModal from '../../../form';
 
 export default function QuestionList ({ questions }) {
-  const { product } = useContext(AppContext);
+  const { product, refetch } = useContext(AppContext);
   const [showModal, setShowModal] = useState(false);
   const [displayCount, setDisplayCount] = useState(4);
 
@@ -45,10 +45,12 @@ export default function QuestionList ({ questions }) {
         subtitle={`.. about the ${product.name}`}
         endpoint="/qa/questions"
         showModal={showModal}
-        onClick={() => setShowModal(false)}
-        onSubmit={() => setShowModal(false)}
         fields={[Question, User]}
-        data={{ body: '', email: '', name: '' }}
+        onClick={() => setShowModal(false)}
+        onSubmit={async () => {
+          setShowModal(false);
+          await refetch();
+        }}
       />
     </div>
   );

@@ -1,24 +1,16 @@
 import React, { useEffect } from 'react';
+import { REQUIRED_FIELD, REVIEW_LENGTH, validate } from '../utils';
 
 export default function Review ({ errors, setErrors, formData, setFormData }) {
   const { summary, body } = formData;
 
   useEffect(() => {
-    if (!body) {
-      setErrors({ ...errors, body: "This field is required" });
-      return;
-    }
-
-    if (!summary) {
-      setErrors({ ...errors, summary: "This field is required" });
-    }
-
-    if (body.length < 50) {
-      setErrors({ ...errors, body: 'Your review must be longer than 50 characters' });
-      return;
-    }
+    validate(formData, errors, setErrors, 'body', REQUIRED_FIELD);
+    validate(formData, errors, setErrors, 'summary', REQUIRED_FIELD);
+    validate(formData, errors, setErrors, 'body', REVIEW_LENGTH, (field) => {
+      return field.length >= 50;
+    });
   }, [body, summary]);
-
 
   return (
     <>

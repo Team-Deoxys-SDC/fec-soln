@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
+import { REQUIRED_FIELD, validate } from '../utils';
 
 export default function Question ({ errors, setErrors, formData, setFormData }) {
   const { body } = formData;
 
   useEffect(() => {
-    if (body) return;
-
-    setErrors({ ...errors, body: "This field is required" });
+    validate(formData, errors, setErrors, 'body', REQUIRED_FIELD);
   }, [body]);
 
   return (

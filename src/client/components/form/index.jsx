@@ -5,14 +5,11 @@ import { AppContext } from '../../contexts';
 import Column from '../layout/Column';
 
 export default function CreateFormModal ({
-  showModal, onClick, onSubmit, title, subtitle, fields, endpoint, data
+  showModal, onClick, onSubmit, title, subtitle, fields, endpoint
 }) {
-  const { refetch, product } = useContext(AppContext);
+  const { product } = useContext(AppContext);
   const [errors, setErrors] = useState({});
-  const [formData, setFormData] = useState({ ...data, product_id: product.id });
-
-  console.log(formData);
-  console.log(errors);
+  const [formData, setFormData] = useState({});
 
   return (
     <Modal showModal={showModal} onClick={onClick}>
@@ -39,13 +36,13 @@ export default function CreateFormModal ({
 
             await fetch(endpoint, {
               method: 'POST',
-              body: JSON.stringify(formData),
+              body: JSON.stringify({ ...formData, product_id: product.id }),
               headers: { 'Content-Type': 'application/json' }
             });
 
-            await refetch();
+            await onSubmit();
 
-            onSubmit();
+            setFormData({});
           }}
           style={{ marginTop: '1em' }}
         >

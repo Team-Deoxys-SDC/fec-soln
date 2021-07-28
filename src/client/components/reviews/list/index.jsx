@@ -18,7 +18,10 @@ import Characteristics from '../../form/fields/Characteristics';
 export default function ReviewList () {
   const [showModal, setShowModal] = useState(false);
   const [displayCount, setDisplayCount] = useState(2);
-  const { reviews, reviewStarFilters, product, reviewsSortedBy, setReviewsSortedBy } = useContext(AppContext);
+
+  const {
+    reviews, reviewStarFilters, product, reviewsSortedBy, setReviewsSortedBy, refetch
+  } = useContext(AppContext);
 
   // Handle rating filters
   const ratingFilters = new Set(flattenStarFilters(reviewStarFilters));
@@ -70,20 +73,12 @@ export default function ReviewList () {
         title="Write your Review"
         subtitle={`... about the ${product.name}`}
         endpoint="/api/reviews"
-        data={{
-          body: '',
-          name: '',
-          email: '',
-          rating: 3,
-          photos: [],
-          summary: '',
-          recommend: true,
-          characteristics: {},
-          product_id: product.id
-        }}
         showModal={showModal}
         onClick={() => setShowModal(false)}
-        onSubmit={() => setShowModal(false)}
+        onSubmit={async () => {
+          setShowModal(false);
+          await refetch();
+        }}
         fields={[Overall, Recommend, Characteristics, Review, Photos, User]}
       />
     </div>

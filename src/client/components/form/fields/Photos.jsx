@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { eventSetter } from '../../../utils';
 
 import Row from '../../layout/Row';
 import Column from '../../layout/Column';

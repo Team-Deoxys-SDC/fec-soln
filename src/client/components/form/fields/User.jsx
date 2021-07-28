@@ -1,24 +1,17 @@
+/* eslint-disable prefer-reflect */
 import React, { useEffect } from 'react';
-import { validate } from "email-validator";
+import { validate as validateEmail } from "email-validator";
+import { validate, REQUIRED_FIELD, INVALID_EMAIL } from '../utils';
 
 export default function User ({ errors, setErrors, formData, setFormData }) {
   const { name, email } = formData;
 
   useEffect(() => {
-    if (!name) {
-      setErrors({ ...errors, name: "This field is required" });
-      return;
-    }
-
-    if (!email) {
-      setErrors({ ...errors, email: "This field is required" });
-      return;
-    }
-
-    if (email && !validate(email)) {
-      setErrors({ ...errors, email: 'Please enter a valid email' });
-      return;
-    }
+    validate(formData, errors, setErrors, 'name', REQUIRED_FIELD);
+    validate(formData, errors, setErrors, 'email', REQUIRED_FIELD);
+    validate(formData, errors, setErrors, 'email', INVALID_EMAIL, (field) => {
+      return field && validateEmail(field);
+    });
   }, [name, email]);
 
   return (
