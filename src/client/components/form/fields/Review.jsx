@@ -5,16 +5,16 @@ export default function Review ({ errors, setErrors, formData, setFormData }) {
 
   useEffect(() => {
     if (!body) {
-      setErrors({ body: "This field is required" });
+      setErrors({ ...errors, body: "This field is required" });
       return;
     }
 
     if (!summary) {
-      setErrors({ summary: "This field is required" });
+      setErrors({ ...errors, summary: "This field is required" });
     }
 
     if (body.length < 50) {
-      setErrors({ body: 'Your review must be longer than 50 characters' });
+      setErrors({ ...errors, body: 'Your review must be longer than 50 characters' });
       return;
     }
   }, [body, summary]);

@@ -6,7 +6,7 @@ export default function Question ({ errors, setErrors, formData, setFormData }) 
   useEffect(() => {
     if (body) return;
 
-    setErrors({ body: "This field is required" });
+    setErrors({ ...errors, body: "This field is required" });
   }, [body]);
 
   return (

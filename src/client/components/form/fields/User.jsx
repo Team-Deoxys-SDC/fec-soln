@@ -6,17 +6,17 @@ export default function User ({ errors, setErrors, formData, setFormData }) {
 
   useEffect(() => {
     if (!name) {
-      setErrors({ name: "This field is required" });
+      setErrors({ ...errors, name: "This field is required" });
       return;
     }
 
     if (!email) {
-      setErrors({ email: "This field is required" });
+      setErrors({ ...errors, email: "This field is required" });
       return;
     }
 
     if (email && !validate(email)) {
-      setErrors({ email: 'Please enter a valid email' });
+      setErrors({ ...errors, email: 'Please enter a valid email' });
       return;
     }
   }, [name, email]);

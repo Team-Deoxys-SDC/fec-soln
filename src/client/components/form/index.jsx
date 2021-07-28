@@ -11,6 +11,9 @@ export default function CreateFormModal ({
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({ ...data, product_id: product.id });
 
+  console.log(formData);
+  console.log(errors);
+
   return (
     <Modal showModal={showModal} onClick={onClick}>
       <Column onClick={(event) => event.stopPropagation()}>

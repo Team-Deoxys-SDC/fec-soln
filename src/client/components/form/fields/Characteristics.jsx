@@ -14,7 +14,7 @@ export default function Characteristics ({ formData, setFormData, errors, setErr
       return;
     }
 
-    setErrors({ characteristics: "This field is required" });
+    setErrors({ ...errors, characteristics: "This field is required" });
   }, [characteristics]);
 
   return (
