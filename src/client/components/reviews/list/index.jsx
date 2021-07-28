@@ -4,6 +4,7 @@ import { AppContext } from '../../../contexts';
 import { flattenStarFilters } from '../../../utils';
 
 import ReviewTile from '../tile';
+import SplitScreen from '../../layout/SplitScreen';
 import ScrollableList from '../../layout/ScrollableList';
 
 import CreateFormModal from '../../form';
@@ -13,10 +14,9 @@ import Review from '../../form/fields/Review';
 import Overall from '../../form/fields/Overall';
 import Recommend from '../../form/fields/Recommend';
 import Characteristics from '../../form/fields/Characteristics';
-import Row from '../../layout/Row';
 
 export default function ReviewList () {
-  const [showModal, setShowModal] = useState(2);
+  const [showModal, setShowModal] = useState(false);
   const [displayCount, setDisplayCount] = useState(2);
   const { reviews, reviewStarFilters, product, reviewsSortedBy, setReviewsSortedBy } = useContext(AppContext);
 
@@ -49,22 +49,22 @@ export default function ReviewList () {
       </ScrollableList>
 
       {/* Buttons */}
-      <Row>
+      <SplitScreen>
         {displayCount < filteredReviews.length && (
           <button
             onClick={() => setDisplayCount(displayCount + 2)}
-            style={{ marginRight: '1em', width: '30%', height: '30px' }}>
+            style={{ width: '100%', height: '30px' }}>
             More Reviews
           </button>
         )}
 
         <button
           onClick={() => setShowModal(true)}
-          style={{ width: '30%', height: '30px' }}
+          style={{ width: '100%', height: '30px' }}
         >
           Add a Review +
         </button>
-      </Row>
+      </SplitScreen>
 
       <CreateFormModal
         title="Write your Review"

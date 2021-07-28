@@ -15,7 +15,7 @@ export default function User ({ errors, setErrors, formData, setFormData }) {
       return;
     }
 
-    if (email && email && !validate(email)) {
+    if (email && !validate(email)) {
       setErrors({ email: 'Please enter a valid email' });
       return;
     }
@@ -24,7 +24,7 @@ export default function User ({ errors, setErrors, formData, setFormData }) {
   return (
     <>
       <h3>Nickname*</h3>
-      <small style={{ color: 'red' }}>{errors.name}</small>
+      {errors.show && <small style={{ color: 'red' }}>{errors.name}</small>}
       <input
         placeholder="Example: jackson11!"
         value={name}
@@ -33,7 +33,7 @@ export default function User ({ errors, setErrors, formData, setFormData }) {
       <small style={{ marginTop: '0.3em' }}>For privacy reasons, do not use your full name or email address</small>
 
       <h3>Email*</h3>
-      <small style={{ color: 'red' }}>{errors.email}</small>
+      {errors.show && <small style={{ color: 'red' }}>{errors.email}</small>}
       <input
         placeholder="jackson11@email.com"
         value={email}

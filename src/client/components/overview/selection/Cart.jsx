@@ -1,7 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../../../contexts';
-import Column from '../../layout/Column';
+
 import Row from '../../layout/Row';
+import Column from '../../layout/Column';
+import SplitScreen from '../../layout/SplitScreen';
 
 export default function Cart () {
   const [sku, setSku] = useState('');
@@ -28,7 +30,7 @@ export default function Cart () {
 
   return (
     <>
-      <Row>
+      <SplitScreen>
         {/* Size Selection */}
         <Column>
           <label htmlFor="size">{showSizes > 1 ? 'Please select a size' : 'Choose a size:'}</label>
@@ -66,7 +68,7 @@ export default function Cart () {
             ))}
           </select>
         </Column>
-      </Row>
+      </SplitScreen>
 
 
       {/* Add to cart and favorite */}

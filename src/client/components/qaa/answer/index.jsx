@@ -5,7 +5,7 @@ import Row from '../../layout/Row';
 
 export default function AnswerTile ({ answer }) {
   return (
-    <Column>
+    <Column style={{ marginTop: '0.25em' }}>
       <Row>
         <strong>A: </strong>
         <div style={{ marginLeft: '0.2em' }}>{answer.body}</div>

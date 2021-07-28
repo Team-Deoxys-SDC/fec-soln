@@ -8,7 +8,7 @@ export default function Reviews () {
   return (
     <div>
       <h1>Ratings & Reviews</h1>
-      <SplitScreen widths={[50, 50]}>
+      <SplitScreen>
         <Ratings />
         <ReviewList />
       </SplitScreen>

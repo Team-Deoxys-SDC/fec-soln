@@ -16,7 +16,7 @@ export default function QuestionList ({ questions }) {
   const [displayCount, setDisplayCount] = useState(4);
 
   return (
-    <>
+    <div>
       {/* Question List */}
       <ScrollableList style={{ maxHeight: '400px' }}>
         {questions.slice(0, displayCount).map(question => (
@@ -50,6 +50,6 @@ export default function QuestionList ({ questions }) {
         fields={[Question, User]}
         data={{ body: '', email: '', name: '' }}
       />
-    </>
+    </div>
   );
 }

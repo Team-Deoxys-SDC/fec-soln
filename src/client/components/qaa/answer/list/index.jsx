@@ -7,7 +7,7 @@ export default function AnswerList ({ answers }) {
   const [displayCount, setDisplayCount] = useState(2);
 
   return (
-    <>
+    <div style={{ marginLeft: '0.25em' }}>
       <ScrollableList style={{ maxHeight: '400px' }}>
         {answers.slice(0, displayCount).map(answer => (
           <Answer key={answer.id} answer={answer} />
@@ -15,14 +15,15 @@ export default function AnswerList ({ answers }) {
       </ScrollableList>
 
       {answers.length > 2 && (
-        <small
-          onClick={() => setDisplayCount(displayCount === answers.length ? 2 : answers.length)}
-          style={{ margin: '1em 0 0 1.5em', cursor: 'pointer' }}
-        >
-          <strong>{displayCount === answers.length ? 'HIDE' : 'SHOW MORE'} ANSWERS</strong>
-        </small>
+        <div style={{ margin: '0.5em 0 0 1em', cursor: 'pointer' }}>
+          <small
+            onClick={() => setDisplayCount(displayCount === answers.length ? 2 : answers.length)}
+          >
+            <strong>{displayCount === answers.length ? 'HIDE' : 'SHOW MORE'} ANSWERS</strong>
+          </small>
+        </div>
       )}
-    </>
+    </div>
 
   );
 }

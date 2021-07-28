@@ -18,7 +18,7 @@ export default function QuestionTile ({ question }) {
   const { product } = useContext(AppContext);
 
   return (
-    <Column>
+    <Column style={{ marginTop: '1em' }}>
       {/* Header */}
       <Row style={{ justifyContent: 'space-between' }}>
         <h3 style={{ margin: 0 }}>Q: {question.question_body}</h3>
