@@ -9,6 +9,7 @@ import ScrollableList from '../../../layout/ScrollableList';
 import User from '../../../form/fields/User';
 import Question from '../../../form/fields/Question';
 import CreateFormModal from '../../../form';
+import { validators } from '../../../form/utils';
 
 export default function QuestionList ({ questions }) {
   const { product, refetch } = useContext(AppContext);
@@ -43,9 +44,15 @@ export default function QuestionList ({ questions }) {
       <CreateFormModal
         title="Ask Your Question"
         subtitle={`.. about the ${product.name}`}
-        endpoint="/qa/questions"
+        endpoint="/api/qa/questions"
         showModal={showModal}
         fields={[Question, User]}
+        initial={{ name: '', email: '', body: '', product_id: product.id }}
+        validations={{
+          name: validators.EMPTY,
+          email: validators.INVALID_EMAIL,
+          body: validators.EMPTY
+        }}
         onClick={() => setShowModal(false)}
         onSubmit={async () => {
           setShowModal(false);

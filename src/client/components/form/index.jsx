@@ -1,15 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
 import Modal from '../layout/Modal';
-import { AppContext } from '../../contexts';
 import Column from '../layout/Column';
 
 export default function CreateFormModal ({
-  showModal, onClick, onSubmit, title, subtitle, fields, endpoint
+  showModal, onClick, onSubmit, title, subtitle, fields, endpoint, initial, validations
 }) {
-  const { product } = useContext(AppContext);
   const [errors, setErrors] = useState({});
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({ ...initial });
 
   return (
     <Modal showModal={showModal} onClick={onClick}>
@@ -29,20 +27,28 @@ export default function CreateFormModal ({
 
         <button
           onClick={async () => {
-            if (Object.keys(errors).length) {
-              setErrors({ ...errors, show: true });
+            // Check for validation errors
+            const validationErrors = Object.entries(validations).map(([field, validate]) => {
+              const message = validate(formData[field]);
+
+              return message ? [field, message] : null;
+            }).filter(Boolean);
+
+            // Do we have any??
+            if (validationErrors.length) {
+              setErrors(Object.fromEntries(validationErrors));
               return;
             }
 
             await fetch(endpoint, {
               method: 'POST',
-              body: JSON.stringify({ ...formData, product_id: product.id }),
+              body: JSON.stringify(formData),
               headers: { 'Content-Type': 'application/json' }
             });
 
             await onSubmit();
 
-            setFormData({});
+            setFormData({ ...initial });
           }}
           style={{ marginTop: '1em' }}
         >

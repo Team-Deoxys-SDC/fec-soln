@@ -7,20 +7,21 @@ import ReviewTile from '../tile';
 import SplitScreen from '../../layout/SplitScreen';
 import ScrollableList from '../../layout/ScrollableList';
 
-import CreateFormModal from '../../form';
 import User from '../../form/fields/User';
 import Photos from '../../form/fields/Photos';
 import Review from '../../form/fields/Review';
 import Overall from '../../form/fields/Overall';
 import Recommend from '../../form/fields/Recommend';
 import Characteristics from '../../form/fields/Characteristics';
+import CreateFormModal from '../../form';
+import { REQUIRED_FIELD, validators } from '../../form/utils';
 
 export default function ReviewList () {
   const [showModal, setShowModal] = useState(false);
   const [displayCount, setDisplayCount] = useState(2);
 
   const {
-    reviews, reviewStarFilters, product, reviewsSortedBy, setReviewsSortedBy, refetch
+    reviews, reviewStarFilters, product, reviewsSortedBy, setReviewsSortedBy, refetch, reviewMeta
   } = useContext(AppContext);
 
   // Handle rating filters
@@ -73,6 +74,27 @@ export default function ReviewList () {
         title="Write your Review"
         subtitle={`... about the ${product.name}`}
         endpoint="/api/reviews"
+        validations={{
+          body: validators.REVIEW_LENGTH,
+          name: validators.EMPTY,
+          email: validators.INVALID_EMAIL,
+          summary: validators.EMPTY,
+          characteristics: characteristics => (
+            Object.keys(characteristics).length !==
+            Object.keys(reviewMeta.characteristics).length
+          ) && REQUIRED_FIELD
+        }}
+        initial={{
+          body: '',
+          name: '',
+          email: '',
+          rating: 3,
+          photos: [],
+          summary: '',
+          recommend: true,
+          characteristics: {},
+          product_id: product.id
+        }}
         showModal={showModal}
         onClick={() => setShowModal(false)}
         onSubmit={async () => {

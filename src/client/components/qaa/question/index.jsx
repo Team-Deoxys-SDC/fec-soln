@@ -10,6 +10,7 @@ import Photos from '../../form/fields/Photos';
 import CreateFormModal from '../../form';
 import Row from '../../layout/Row';
 import Column from '../../layout/Column';
+import { validators } from '../../form/utils';
 
 
 export default function QuestionTile ({ question }) {
@@ -36,6 +37,12 @@ export default function QuestionTile ({ question }) {
         title="Submit Your Answer"
         subtitle={`${product.name}: ${question.body}`}
         endpoint={`/qa/questions/${question.question_id}/answers`}
+        initial={{ name: '', email: '', body: '', photos: [], product_id: product.id }}
+        validations={{
+          name: validators.EMPTY,
+          email: validators.INVALID_EMAIL,
+          body: validators.EMPTY
+        }}
         fields={[Answer, User, Photos]}
         showModal={showModal}
         onClick={() => { setShowModal(false); }}

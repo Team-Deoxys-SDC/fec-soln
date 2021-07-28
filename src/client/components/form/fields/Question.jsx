@@ -1,17 +1,12 @@
-import React, { useEffect } from 'react';
-import { REQUIRED_FIELD, validate } from '../utils';
+import React from 'react';
 
-export default function Question ({ errors, setErrors, formData, setFormData }) {
+export default function Question ({ errors, formData, setFormData }) {
   const { body } = formData;
-
-  useEffect(() => {
-    validate(formData, errors, setErrors, 'body', REQUIRED_FIELD);
-  }, [body]);
 
   return (
     <>
       <h3>Your Question*</h3>
-      {errors.show && <small style={{ color: 'red' }}>{errors.body}</small>}
+      <small style={{ color: 'red' }}>{errors.body}</small>
       <textarea
         style={{ width: '100%', height: '10%', fontSize: '1.25em' }}
         value={body}

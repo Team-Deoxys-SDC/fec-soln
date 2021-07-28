@@ -1,21 +1,12 @@
-import React, { useEffect } from 'react';
-import { REQUIRED_FIELD, REVIEW_LENGTH, validate } from '../utils';
+import React from 'react';
 
-export default function Review ({ errors, setErrors, formData, setFormData }) {
+export default function Review ({ errors, formData, setFormData }) {
   const { summary, body } = formData;
-
-  useEffect(() => {
-    validate(formData, errors, setErrors, 'body', REQUIRED_FIELD);
-    validate(formData, errors, setErrors, 'summary', REQUIRED_FIELD);
-    validate(formData, errors, setErrors, 'body', REVIEW_LENGTH, (field) => {
-      return field.length >= 50;
-    });
-  }, [body, summary]);
 
   return (
     <>
       <h3>Review Summary*</h3>
-      {errors.show && <small style={{ color: 'red' }}>{errors.summary}</small>}
+      <small style={{ color: 'red' }}>{errors.summary}</small>
       <input
         placeholder="Please input a summary of your review"
         value={summary}
@@ -23,7 +14,7 @@ export default function Review ({ errors, setErrors, formData, setFormData }) {
       />
 
       <h3>Review Body*</h3>
-      {errors.show && <small style={{ color: 'red' }}>{errors.body}</small>}
+      <small style={{ color: 'red' }}>{errors.body}</small>
       <textarea
         value={body}
         placeholder="Please review the product"

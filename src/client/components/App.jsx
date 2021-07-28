@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router';
 import { AppContext } from '../contexts';
 import { fetchEndpoint, getRandomInteger } from '../utils';
@@ -10,9 +10,6 @@ import Header from './layout/Header';
 
 function App () {
   const { params: { product: id } } = useRouteMatch();
-
-  // Global Modal
-  const modal = useRef(null);
 
   // Product state
   const [styles, setStyles] = useState();
@@ -39,7 +36,7 @@ function App () {
   useEffect(() => fetchEndpoint(`/api/products/${id}`).then(setProduct), []);
   useEffect(() => fetchEndpoint(`/api/reviews/meta?product_id=${id}`).then(setReviewMeta), []);
   useEffect(() => fetchEndpoint(`/api/products/${id}/styles`).then(styles => setStyles(styles.results)), []);
-  useEffect(() => fetchEndpoint(`/api/qa/questions?product_id=${id}&count=100`).then(setQuestions), []);
+  useEffect(() => fetchEndpoint(`/api/qa/questions?product_id=${id}&count=100`).then(setQuestions), [refetch]);
 
   useEffect(() => {
     fetchEndpoint(`/api/reviews?product_id=${id}&count=100000&sort=${reviewsSortedBy}`)
@@ -53,7 +50,6 @@ function App () {
   return (
     <AppContext.Provider value={{
       userToken,
-      modal,
       styles, setStyles,
       reviews, setReviews,
       product, setProduct,
