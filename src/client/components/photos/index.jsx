@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Row from '../layout/Row';
 import PhotoModal from './Modal';
 
 export default function Photos ({ photos }) {
@@ -8,7 +9,7 @@ export default function Photos ({ photos }) {
 
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <Row>
         {photos.map(photo => (
           <img
             key={photo.id}
@@ -26,7 +27,7 @@ export default function Photos ({ photos }) {
             }}
           />
         ))}
-      </div>
+      </Row>
 
       <PhotoModal
         dims={dims}

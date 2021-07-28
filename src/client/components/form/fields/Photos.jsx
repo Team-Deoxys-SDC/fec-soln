@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { eventSetter } from '../../../utils';
 
+import Row from '../../layout/Row';
+import Column from '../../layout/Column';
+
 export default function Photos ({ formData, setFormData }) {
   const { photos } = formData;
   const [currentPhoto, setCurrentPhoto] = useState('');
@@ -8,8 +11,8 @@ export default function Photos ({ formData, setFormData }) {
   return (
     <>
       <h3>Upload Photos</h3>
-      {Boolean(photos.length) && (
-        <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '1em' }}>
+      {photos.length > 0 && (
+        <Row style={{ marginBottom: '1em' }}>
           {photos.map((photo, index) => (
             <img
               key={photo + index}
@@ -17,11 +20,11 @@ export default function Photos ({ formData, setFormData }) {
               src={photo}
             />
           ))}
-        </div>
+        </Row>
       )}
 
       {photos.length < 5 && (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Column>
           <input
             size="30"
             type="url"
@@ -42,7 +45,7 @@ export default function Photos ({ formData, setFormData }) {
             }}>
             Add Photo
           </button>
-        </div>
+        </Column>
       )}
     </>
   );

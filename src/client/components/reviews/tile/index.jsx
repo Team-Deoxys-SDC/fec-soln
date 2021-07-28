@@ -6,6 +6,7 @@ import moment from 'moment';
 import Photos from '../../photos';
 import Helpful from '../../layout/Helpful';
 import { AppContext } from '../../../contexts';
+import Row from '../../layout/Row';
 
 export default function ReviewTile ({ review }) {
   const { refetch } = useContext(AppContext);
@@ -13,7 +14,7 @@ export default function ReviewTile ({ review }) {
   return (
     <div style={{ marginTop: '2em' }}>
       {/* Heading */}
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Row style={{ justifyContent: 'space-between' }}>
         <Stars
           rating={review.rating}
           starDimension="1em"
@@ -24,7 +25,7 @@ export default function ReviewTile ({ review }) {
           {' - '}
           {moment(review.date).format('MMMM DD, YYYY')}
         </small>
-      </div>
+      </Row>
 
       {/* Body */}
       <h3>{review.summary}</h3>
@@ -32,10 +33,10 @@ export default function ReviewTile ({ review }) {
 
       {/* Recommend */}
       {review.recommend && (
-        <div style={{ display: 'flex', flexDirection: 'row', marginTop: '1em' }}>
+        <Row style={{ marginTop: '1em' }}>
           <FaCheck />
           <div style={{ marginLeft: '0.3em' }}>I recommend this product</div>
-        </div>
+        </Row>
       )}
 
       {/* Response */}

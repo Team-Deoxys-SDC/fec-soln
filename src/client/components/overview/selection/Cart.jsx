@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../../../contexts';
+import Column from '../../layout/Column';
+import Row from '../../layout/Row';
 
 export default function Cart () {
   const [sku, setSku] = useState('');
@@ -25,10 +27,10 @@ export default function Cart () {
   const quantities = [...new Array(Math.min(style.skus[sku]?.quantity || 0, 15)).keys()];
 
   return (
-    <div>
-      <div style={{ display: 'flex', flexDirection: 'row' }} >
+    <>
+      <Row>
         {/* Size Selection */}
-        <div style={{ width: '50%', display: 'flex', flexDirection: 'column' }}>
+        <Column>
           <label htmlFor="size">{showSizes > 1 ? 'Please select a size' : 'Choose a size:'}</label>
           <select
             size={showSizes}
@@ -47,10 +49,10 @@ export default function Cart () {
               <option key={id} value={id}>{sku.size}</option>
             ))}
           </select>
-        </div>
+        </Column>
 
         {/* Quantity Selection */}
-        <div style={{ marginLeft: '1em', width: '50%', display: 'flex', flexDirection: 'column' }}>
+        <Column>
           <label htmlFor="quantity">How many?</label>
           <select
             onChange={(event) => setQuantity(event.target.value)}
@@ -63,12 +65,13 @@ export default function Cart () {
               <option key={quantity} value={quantity + 1}>{quantity + 1}</option>
             ))}
           </select>
-        </div>
-      </div>
+        </Column>
+      </Row>
+
 
       {/* Add to cart and favorite */}
-      <div style={{ marginTop: '1em', display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
-        {Boolean(skus.length) &&
+      <Row style={{ marginTop: '1em', justifyContent: 'space-around' }}>
+        {skus.length > 0 &&
           <button
             onClick={() => {
               if (!uniqueSkus.has(sku)) {
@@ -88,7 +91,7 @@ export default function Cart () {
         }
 
         <button style={{ marginLeft: '1em', width: skus.length ? '50%' : '100%' }}>Favorite</button>
-      </div>
-    </div>
+      </Row>
+    </>
   );
 }

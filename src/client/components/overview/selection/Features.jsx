@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import Stars from 'react-star-ratings';
 
-import Styles from './Styles';
-import Selection from './Cart';
 import { AppContext } from '../../../contexts';
 import { averageRating, moneyFormatter } from '../../../utils';
+import Row from '../../layout/Row';
 
 export default function Features () {
   const { product, reviews, styles, selectedStyle } = useContext(AppContext);
@@ -14,7 +13,7 @@ export default function Features () {
   return (
     <>
       {/* Stars and reviews */}
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <Row>
         <Stars
           rating={averageRating(reviews)}
           starDimension="1em"
@@ -25,7 +24,7 @@ export default function Features () {
             Read all {reviews.length} reviews
           </div>
         }
-      </div>
+      </Row>
 
       <h3>{product.category}</h3>
       <h1>{product.name}</h1>

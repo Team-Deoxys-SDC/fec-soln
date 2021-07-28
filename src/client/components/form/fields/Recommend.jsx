@@ -1,4 +1,5 @@
 import React from 'react';
+import Row from '../../layout/Row';
 
 export default function Recommend ({ formData, setFormData }) {
   const { recommend } = formData;
@@ -6,7 +7,7 @@ export default function Recommend ({ formData, setFormData }) {
   return (
     <>
       <h3>Do you recommend this product?*</h3>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <Row>
         <input
           value
           type="radio"
@@ -20,7 +21,7 @@ export default function Recommend ({ formData, setFormData }) {
           onChange={() => setFormData({ ...formData, recommend: false })}
           checked={!recommend}
         /> No
-      </div>
+      </Row>
     </>
   );
 }

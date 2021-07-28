@@ -13,6 +13,7 @@ import Review from '../../form/fields/Review';
 import Overall from '../../form/fields/Overall';
 import Recommend from '../../form/fields/Recommend';
 import Characteristics from '../../form/fields/Characteristics';
+import Row from '../../layout/Row';
 
 export default function ReviewList () {
   const [showModal, setShowModal] = useState(2);
@@ -48,7 +49,7 @@ export default function ReviewList () {
       </ScrollableList>
 
       {/* Buttons */}
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <Row>
         {displayCount < filteredReviews.length && (
           <button
             onClick={() => setDisplayCount(displayCount + 2)}
@@ -63,7 +64,7 @@ export default function ReviewList () {
         >
           Add a Review +
         </button>
-      </div>
+      </Row>
 
       <CreateFormModal
         title="Write your Review"

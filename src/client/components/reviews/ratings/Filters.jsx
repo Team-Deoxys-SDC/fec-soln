@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../../../contexts';
 import { flattenStarFilters } from '../../../utils';
+import Row from '../../layout/Row';
 
 export default function Filters () {
   const { reviewStarFilters, setReviewStarFilters } = useContext(AppContext);
 
   const flattenedStarFilters = flattenStarFilters(reviewStarFilters);
 
-  return Boolean(flattenedStarFilters.length) && (
-    <div style={{ padding: '1em', paddingLeft: 0, display: 'flex', flexDirection: 'row' }}>
+  return flattenedStarFilters.length > 0 && (
+    <Row style={{ padding: '1em 1em 1em 0' }}>
       {flattenedStarFilters.map(star => (
         <button
           key={star}
@@ -28,6 +29,6 @@ export default function Filters () {
           <strong style={{ color: 'red' }}>x</strong>
         </button>
       ))}
-    </div>
+    </Row>
   );
 }

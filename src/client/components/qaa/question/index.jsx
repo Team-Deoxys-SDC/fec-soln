@@ -8,6 +8,8 @@ import User from '../../form/fields/User';
 import Answer from '../../form/fields/Answer';
 import Photos from '../../form/fields/Photos';
 import CreateFormModal from '../../form';
+import Row from '../../layout/Row';
+import Column from '../../layout/Column';
 
 
 export default function QuestionTile ({ question }) {
@@ -16,9 +18,9 @@ export default function QuestionTile ({ question }) {
   const { product } = useContext(AppContext);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', padding: '1em' }}>
+    <Column>
       {/* Header */}
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Row style={{ justifyContent: 'space-between' }}>
         <h3 style={{ margin: 0 }}>Q: {question.question_body}</h3>
 
         <Helpful
@@ -27,7 +29,7 @@ export default function QuestionTile ({ question }) {
           onActionClick={async () => { setShowModal(true); }}
           action="Add Answer"
         />
-      </div>
+      </Row>
 
       {/* Create Question */}
       <CreateFormModal
@@ -43,6 +45,6 @@ export default function QuestionTile ({ question }) {
 
       {/* Answer List */}
       <AnswerList answers={answers} />
-    </div>
+    </Column>
   );
 }

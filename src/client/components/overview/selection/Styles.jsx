@@ -2,13 +2,15 @@ import React, { useContext } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import { AppContext } from '../../../contexts';
 
+import Row from '../../layout/Row';
+
 export default function Styles () {
   const { styles, selectedStyle, setSelectedStyle, selectedPhoto } = useContext(AppContext);
 
   return (
     <div>
       <h3>Style {'>'} {styles[selectedStyle].name}</h3>
-      <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
+      <Row style={{ flexWrap: 'wrap' }}>
         {styles.map((style, index) => {
           const isSelected = index === selectedStyle;
           return (
@@ -31,7 +33,7 @@ export default function Styles () {
             </div>
           );
         })}
-      </div>
+      </Row>
     </div>
   );
 }

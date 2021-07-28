@@ -1,10 +1,9 @@
 import React from 'react';
+import Row from './Row';
 
-export default function Helpful ({
-  resource, onHelpfulClick, onActionClick, action
-}) {
+export default function Helpful ({ resource, onHelpfulClick, onActionClick, action }) {
   return (
-    <div style={{ marginTop: '1em', display: 'flex', flexDirection: 'row' }}>
+    <Row style={{ marginTop: '1em' }}>
       <small>Helpful?</small>
       <small
         onClick={onHelpfulClick}
@@ -20,6 +19,6 @@ export default function Helpful ({
       >
         {action}
       </small>
-    </div>
+    </Row>
   );
 }

@@ -7,6 +7,7 @@ import { AppContext } from '../../contexts';
 import User from '../form/fields/User';
 import Question from '../form/fields/Question';
 import ScrollableList from '../../layout/Scrollable';
+import Row from '../../../layout/Row';
 
 export default function QuestionsAndAnswers ({ questions }) {
   const { product } = useContext(AppContext);
@@ -23,7 +24,7 @@ export default function QuestionsAndAnswers ({ questions }) {
       </ScrollableList>
 
       {/* Buttons */}
-      <div style={{ display: 'flex', flexDirection: 'row', padding: '2em' }}>
+      <Row style={{ padding: '2em' }}>
         {questions.length > 2 && (
           <button onClick={() => setDisplayCount(displayCount + 2)}>
             More Answered Questions
@@ -35,7 +36,7 @@ export default function QuestionsAndAnswers ({ questions }) {
         >
           Add a Question
         </button>
-      </div>
+      </Row>
 
       {/* Add a Question */}
       <CreateFormModal

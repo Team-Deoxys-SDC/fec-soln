@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 
 import Modal from '../layout/Modal';
 import { AppContext } from '../../../contexts';
+import Column from '../layout/Column';
 
 export default function CreateFormModal ({
   showModal, onClick, onSubmit, title, subtitle, fields, endpoint, data
@@ -12,10 +13,7 @@ export default function CreateFormModal ({
 
   return (
     <Modal showModal={showModal} onClick={onClick}>
-      <div
-        onClick={(event) => event.stopPropagation()}
-        style={{ display: 'flex', flexDirection: 'column' }}
-      >
+      <Column onClick={(event) => event.stopPropagation()}>
         <h1>{title}</h1>
         <h3>{subtitle}</h3>
 
@@ -44,7 +42,7 @@ export default function CreateFormModal ({
         >
           Submit
         </button>
-      </div>
+      </Column>
     </Modal>
   );
 }

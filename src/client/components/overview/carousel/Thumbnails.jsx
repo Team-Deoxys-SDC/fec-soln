@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../../../contexts';
 import { increment, decrement } from '../../../utils';
+import Column from '../../layout/Column';
 import { ThumbnailScrollButton } from './ScrollButton';
 
 export default function Thumbnails () {
@@ -9,8 +10,10 @@ export default function Thumbnails () {
   const style = styles[selectedStyle];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      {thumbnailStart > 0 && <ThumbnailScrollButton label={'/\\'} change={decrement} />}
+    <Column>
+      {thumbnailStart > 0 && (
+        <ThumbnailScrollButton label={'/\\'} change={decrement} />
+      )}
 
       {style.photos.slice(thumbnailStart, thumbnailStart + 7).map((photo, photoIndex) => (
         <img
@@ -29,7 +32,10 @@ export default function Thumbnails () {
         />
       ))}
 
-      {thumbnailStart + 7 < style.photos.length && <ThumbnailScrollButton label={'\\/'} change={increment} />}
-    </div>
+      {thumbnailStart + 7 < style.photos.length && (
+        <ThumbnailScrollButton label={'\\/'} change={increment} />
+      )}
+    </Column>
+
   );
 }
