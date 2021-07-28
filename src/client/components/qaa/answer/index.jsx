@@ -1,7 +1,9 @@
 import moment from 'moment';
 import React from 'react';
-import Column from '../../layout/Column';
+
+import Photos from '../../photos';
 import Row from '../../layout/Row';
+import Column from '../../layout/Column';
 
 export default function AnswerTile ({ answer }) {
   return (
@@ -12,18 +14,7 @@ export default function AnswerTile ({ answer }) {
       </Row>
 
       {/* Photos */}
-      {answer.photos.map(photo => (
-        <img
-          key={photo}
-          src={photo}
-          style={{
-            width: '100px',
-            height: '100px',
-            marginLeft: '1.5em',
-            padding: '1em 0'
-          }}
-        />
-      ))}
+      <Photos photos={answer.photos} />
 
       {/* Footer */}
       <small style={{ margin: '0.2em 0 0 1.5em' }}>

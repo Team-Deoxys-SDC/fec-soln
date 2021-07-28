@@ -27,7 +27,7 @@ export default function QuestionList ({ questions }) {
 
       {/* Buttons */}
       <Row style={{ padding: '2em' }}>
-        {questions.length > 2 && (
+        {questions.length > 2 && displayCount < questions.length && (
           <button onClick={() => setDisplayCount(displayCount + 2)}>
             More Answered Questions
           </button>
@@ -44,6 +44,7 @@ export default function QuestionList ({ questions }) {
       <CreateFormModal
         title="Ask Your Question"
         subtitle={`.. about the ${product.name}`}
+        style={{ width: '60%', height: '80%' }}
         endpoint="/api/qa/questions"
         showModal={showModal}
         fields={[Question, User]}

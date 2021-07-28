@@ -14,7 +14,7 @@ export default function Modal ({ style = {}, children, showModal, onClick }) {
   return (
     <dialog
       className="modal"
-      style={{ width: '60%', height: '80%', ...style }}
+      style={{ ...style }}
       onClick={onClick}
       ref={modal}
     >

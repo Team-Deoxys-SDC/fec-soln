@@ -26,7 +26,12 @@ export default function QuestionTile ({ question }) {
 
         <Helpful
           value={question.question_helpfulness}
-          onHelpfulClick={async () => { }}
+          onHelpfulClick={async () => {
+            await fetch(`/api/qa/questions/${question.question_id}/helpful`, {
+              method: 'PUT'
+            });
+            refetch();
+          }}
           onActionClick={async () => { setShowModal(true); }}
           action="Add Answer"
         />
@@ -35,8 +40,9 @@ export default function QuestionTile ({ question }) {
       {/* Create Question */}
       <CreateFormModal
         title="Submit Your Answer"
-        subtitle={`${product.name}: ${question.body}`}
-        endpoint={`/qa/questions/${question.question_id}/answers`}
+        style={{ width: '60%', height: '80%' }}
+        subtitle={`${product.name}: ${question.question_body}`}
+        endpoint={`/api/qa/questions/${question.question_id}/answers`}
         initial={{ name: '', email: '', body: '', photos: [], product_id: product.id }}
         validations={{
           name: validators.EMPTY,

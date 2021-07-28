@@ -73,6 +73,7 @@ export default function ReviewList () {
       <CreateFormModal
         title="Write your Review"
         subtitle={`... about the ${product.name}`}
+        style={{ width: '60%', height: '80%' }}
         endpoint="/api/reviews"
         validations={{
           body: validators.REVIEW_LENGTH,

@@ -12,11 +12,11 @@ export default function Photos ({ photos }) {
       <Row>
         {photos.map(photo => (
           <img
-            key={photo.id}
-            src={photo.url}
+            key={photo.id || photo}
+            src={photo.url || photo}
             style={{ padding: '1em', width: '100px', height: '100px' }}
             onClick={(event) => {
-              setImage(photo.url);
+              setImage(photo.url || photo);
 
               setDims({
                 width: event.target.naturalWidth,

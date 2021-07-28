@@ -4,13 +4,22 @@ import Modal from '../layout/Modal';
 import Column from '../layout/Column';
 
 export default function CreateFormModal ({
-  showModal, onClick, onSubmit, title, subtitle, fields, endpoint, initial, validations
+  showModal,
+  onClick,
+  onSubmit,
+  title,
+  subtitle,
+  fields,
+  endpoint,
+  initial,
+  validations,
+  style
 }) {
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({ ...initial });
 
   return (
-    <Modal showModal={showModal} onClick={onClick}>
+    <Modal showModal={showModal} onClick={onClick} style={style}>
       <Column onClick={(event) => event.stopPropagation()}>
         <h1>{title}</h1>
         <h3>{subtitle}</h3>
