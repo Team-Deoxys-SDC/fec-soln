@@ -60,6 +60,8 @@ export function reviewsByRating (reviews) {
 }
 
 export function averageRating (reviews) {
+  if (!reviews.length) return 0;
+
   const totalRating = reviews.reduce(function (totalRating, { rating }) {
     if (Number(rating) < 1 || Number(rating) > 5) {
       return totalRating;

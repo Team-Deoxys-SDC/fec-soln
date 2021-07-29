@@ -57,8 +57,9 @@ function App () {
       .then(relatedIds => Promise.all(relatedIds.map(async (related) => {
         const product = await get(`/api/products/${related}`);
         const styles = await get(`/api/products/${related}/styles`);
+        const reviews = await get(`/api/reviews?product_id=${related}&count=100000`);
 
-        return { ...product, styles: styles.results };
+        return { ...product, styles: styles.results, reviews: reviews.results };
       })))
       .then(setRelated);
   }, [id]);
