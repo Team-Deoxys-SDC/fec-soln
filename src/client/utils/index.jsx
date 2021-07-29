@@ -34,7 +34,7 @@ export function highlight (text, query) {
     );
 }
 
-export async function fetchEndpoint (endpoint) {
+export async function get (endpoint) {
   const response = await fetch(endpoint, { cache: 'reload' });
   return response.json();
 }
