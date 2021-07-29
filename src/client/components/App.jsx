@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router';
 import { AppContext } from '../contexts';
-import { get, getRandomInteger } from '../utils';
+import { get, getFavorites, getRandomInteger, getRelated } from '../utils';
 
 import Header from './layout/Header';
 
@@ -32,6 +32,7 @@ function App () {
 
   // Related state
   const [related, setRelated] = useState();
+  const [favorites, setFavorites] = useState();
 
   // User cookie state
   const [refetch, setRefetch] = useState();
@@ -54,15 +55,15 @@ function App () {
   // Related fetches
   useEffect(() => {
     get(`/api/products/${id}/related`)
-      .then(relatedIds => Promise.all(relatedIds.map(async (related) => {
-        const product = await get(`/api/products/${related}`);
-        const styles = await get(`/api/products/${related}/styles`);
-        const reviews = await get(`/api/reviews?product_id=${related}&count=100000`);
-
-        return { ...product, styles: styles.results, reviews: reviews.results };
-      })))
+      .then(relatedIds => Promise.all(relatedIds.map(getRelated)))
       .then(setRelated);
   }, [id]);
+
+  useEffect(() => {
+    Promise
+      .all(getFavorites().map(getRelated))
+      .then(setFavorites);
+  }, []);
 
 
   if (!styles || !product || !reviewMeta || !reviews || !questions || !related) {
@@ -76,6 +77,7 @@ function App () {
       reviews, setReviews,
       product, setProduct,
       related, setRelated,
+      favorites, setFavorites,
       questions, setQuestions,
       reviewMeta, setReviewMeta,
       fullCarousel, setFullCarousel,

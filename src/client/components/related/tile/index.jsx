@@ -1,43 +1,60 @@
 import React, { useContext, useState } from 'react';
 import Stars from 'react-star-ratings';
 import { useHistory } from 'react-router-dom';
-import { FaStar } from 'react-icons/fa';
 
 import Column from '../../layout/Column';
 import ComparisonModal from '../compare';
-import { averageRating, STOCK_IMAGE } from '../../../utils';
+import { averageRating, STOCK_FAVORITE, STOCK_IMAGE } from '../../../utils';
 import Price from '../../overview/selection/Price';
 import { AppContext } from '../../../contexts';
 
 
-export default function RelatedTile ({ product }) {
+export default function RelatedTile ({
+  product,
+  icon: Icon,
+  action,
+  onClick = () => { },
+  blank = false
+}) {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const { product: mainProduct } = useContext(AppContext);
 
-  const { id, styles: [style], reviews } = product;
+  const tileStyle = {
+    position: 'relative',
+    margin: '0 1em',
+    flexShrink: '0',
+    height: '400px',
+    width: '275px',
+    border: '1px solid black'
+  };
+
+  if (blank) {
+    return (
+      <Column
+        onClick={(event) => onClick(event, { history })}
+        style={tileStyle}
+      >
+        <img
+          style={{ height: '100%', maxWidth: '100%' }}
+          src={STOCK_FAVORITE}
+        />
+      </Column>
+    );
+  }
+
+  const { styles: [style], reviews } = product;
   const { photos: [photo] } = style;
 
   return (
     <Column
-      onClick={(event) => history.push(`/products/${id}`)}
-      style={{
-        position: 'relative',
-        margin: '0 1em',
-        flexShrink: '0',
-        height: '400px',
-        width: '275px',
-        border: '1px solid black'
-      }}>
+      onClick={(event) => onClick(event, { history })}
+      style={tileStyle}>
 
       <>
-        <FaStar
+        <Icon
           color="white"
-          onClick={(event) => {
-            event.stopPropagation();
-
-            setShowModal(true);
-          }}
+          onClick={(event) => action(event, { showModal })}
           style={{ position: 'absolute', margin: '0.2em', top: 0, right: 0 }}
         />
         <img

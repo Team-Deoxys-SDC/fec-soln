@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { extractFeatures } from '../../../utils';
 
 import Modal from '../../layout/Modal';
@@ -25,18 +25,20 @@ export default function ComparisonModal ({ showModal, onClick, product, otherPro
         borderSpacing: '1em',
         fontSize: '1.5em'
       }}>
-        <tr>
-          <th>{product.name}</th>
-          <th />
-          <th>{otherProduct.name}</th>
-        </tr>
-        {allFeatures.map(feature => (
+        <tbody>
           <tr>
-            <td style={{ textAlign: 'center' }}>{productFeatures[feature]}</td>
-            <td style={{ textAlign: 'center' }}>{feature}</td>
-            <td style={{ textAlign: 'center' }}>{otherProductFeatures[feature]}</td>
+            <th>{product.name}</th>
+            <th />
+            <th>{otherProduct.name}</th>
           </tr>
-        ))}
+          {allFeatures.map(feature => (
+            <tr key={feature}>
+              <td style={{ textAlign: 'center' }}>{productFeatures[feature]}</td>
+              <td style={{ textAlign: 'center' }}>{feature}</td>
+              <td style={{ textAlign: 'center' }}>{otherProductFeatures[feature]}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </Modal>
   );

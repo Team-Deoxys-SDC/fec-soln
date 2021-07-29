@@ -1,6 +1,7 @@
 import React from 'react';
 
 export const STOCK_IMAGE = 'https://ih1.redbubble.net/image.846665687.1283/flat,750x1000,075,f.jpg';
+export const STOCK_FAVORITE = 'https://printables.space/files/uploads/download-and-print/large-printable-numbers/plus-a4-1200x1697.jpg';
 
 export function increment (index) {
   return index + 1;
@@ -9,6 +10,34 @@ export function increment (index) {
 export function decrement (index) {
   return index - 1;
 }
+
+export function getFavorites () {
+  const favorites = JSON.parse(localStorage.getItem('favorites'));
+
+  if (!favorites || !Array.isArray(favorites)) {
+    localStorage.setItem('favorites', '[]');
+    return [];
+  } else {
+    return favorites;
+  }
+}
+
+export function setFavorites (data) {
+  localStorage.setItem('favorites', JSON.stringify(data));
+}
+
+export function removeFavoriteAndReturn (product) {
+  return getFavorites().filter(otherProduct => otherProduct !== product);
+}
+
+export function forgetFavorite (product) {
+  setFavorites(removeFavoriteAndReturn(product));
+}
+
+export function persistFavorite (product) {
+  setFavorites(removeFavoriteAndReturn(product).concat(product));
+}
+
 
 export function extractFeatures (product) {
   return product.features.reduce((features, { feature, value }) => {
@@ -45,6 +74,14 @@ export function highlight (text, query) {
 export async function get (endpoint) {
   const response = await fetch(endpoint, { cache: 'reload' });
   return response.json();
+}
+
+export async function getRelated (id) {
+  const product = await get(`/api/products/${id}`);
+  const styles = await get(`/api/products/${id}/styles`);
+  const reviews = await get(`/api/reviews?product_id=${id}&count=100000`);
+
+  return { ...product, styles: styles.results, reviews: reviews.results };
 }
 
 export function getRandomInteger (min = 0, max = 10000) {
