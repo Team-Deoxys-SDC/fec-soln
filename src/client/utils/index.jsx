@@ -10,6 +10,12 @@ export function decrement (index) {
   return index - 1;
 }
 
+export function extractFeatures (product) {
+  return product.features.reduce((features, { feature, value }) => {
+    return { ...features, [feature]: value };
+  }, {});
+}
+
 export function flattenStarFilters (starFilters) {
   return Object
     .entries(starFilters)
