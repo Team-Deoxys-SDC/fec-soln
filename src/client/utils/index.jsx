@@ -1,5 +1,7 @@
 import React from 'react';
 
+export const STOCK_IMAGE = 'https://ih1.redbubble.net/image.846665687.1283/flat,750x1000,075,f.jpg';
+
 export function increment (index) {
   return index + 1;
 }

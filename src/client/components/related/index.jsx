@@ -7,13 +7,14 @@ import Row from '../layout/Row';
 
 export default function RelatedProducts () {
   const { related } = useContext(AppContext);
+
   return (
     <div>
       <h1>Related Products</h1>
 
-      <Row style={{ justifyContent: 'space-around' }}>
+      <Row style={{ overflow: 'auto' }}>
         {related.map(product => (
-          <RelatedTile product={product} />
+          <RelatedTile key={product.id} product={product} />
         ))}
       </Row>
 

@@ -16,7 +16,6 @@ function App () {
   // Product state
   const [styles, setStyles] = useState();
   const [product, setProduct] = useState();
-  const [related, setRelated] = useState();
   const [selectedStyle, setSelectedStyle] = useState(0);
   const [selectedPhoto, setSelectedPhoto] = useState(0);
   const [thumbnailStart, setThumbnailStart] = useState(0);
@@ -28,32 +27,42 @@ function App () {
   const [reviewsSortedBy, setReviewsSortedBy] = useState('relevant');
   const [reviewStarFilters, setReviewStarFilters] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false });
 
-  // QA State
+  // QA state
   const [questions, setQuestions] = useState();
+
+  // Related state
+  const [related, setRelated] = useState();
 
   // User cookie state
   const [refetch, setRefetch] = useState();
   const [userToken] = useState(getRandomInteger());
 
-  // We split into separate useEffects as the reviews endpoint requires a refetch on sort order change
+  // Product fetches
+  useEffect(() => get(`/api/products/${id}`).then(setProduct), [id]);
+  useEffect(() => get(`/api/products/${id}/styles`).then(styles => setStyles(styles.results)), [id]);
 
-  useEffect(() => get(`/api/products/${id}`).then(setProduct), []);
-  useEffect(() => get(`/api/reviews/meta?product_id=${id}`).then(setReviewMeta), []);
-  useEffect(() => get(`/api/products/${id}/styles`).then(styles => setStyles(styles.results)), []);
-  useEffect(() => get(`/api/qa/questions?product_id=${id}&count=100`).then(setQuestions), [refetch]);
-
-  useEffect(() => {
-    get(`/api/products/${id}/related`)
-      .then(relatedIds => Promise.all(
-        relatedIds.map(related => get(`/api/products/${related}`))
-      ))
-      .then(setRelated);
-  }, []);
-
+  // Product review fetches
+  useEffect(() => get(`/api/reviews/meta?product_id=${id}`).then(setReviewMeta), [id]);
   useEffect(() => {
     get(`/api/reviews?product_id=${id}&count=100000&sort=${reviewsSortedBy}`)
       .then(reviews => setReviews(reviews.results));
   }, [reviewsSortedBy, refetch]);
+
+  // Question fetches
+  useEffect(() => get(`/api/qa/questions?product_id=${id}&count=100`).then(setQuestions), [id, refetch]);
+
+  // Related fetches
+  useEffect(() => {
+    get(`/api/products/${id}/related`)
+      .then(relatedIds => Promise.all(relatedIds.map(async (related) => {
+        const product = await get(`/api/products/${related}`);
+        const styles = await get(`/api/products/${related}/styles`);
+
+        return { ...product, styles: styles.results };
+      })))
+      .then(setRelated);
+  }, [id]);
+
 
   if (!styles || !product || !reviewMeta || !reviews || !questions || !related) {
     return <div>Loading</div>;
