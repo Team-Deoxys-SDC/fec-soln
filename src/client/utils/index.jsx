@@ -1,3 +1,5 @@
+import React from 'react';
+
 export function increment (index) {
   return index + 1;
 }
@@ -12,6 +14,24 @@ export function flattenStarFilters (starFilters) {
     .filter(([_, selected]) => selected)
     .map(([star]) => Number(star))
     .reverse();
+}
+
+export function searchHit (text, query) {
+  const lt = text.toLowerCase();
+  const lq = query.toLowerCase();
+
+  return lt === lq || lt.includes(lq);
+}
+
+// Highlight all occurences of query within text
+export function highlight (text, query) {
+  if (!query || query.length < 3) return text;
+
+  return text
+    .split(new RegExp(`(${query})`, 'gi'))
+    .map((phrase, index) =>
+      searchHit(phrase, query) ? <mark key={phrase + index}>{phrase}</mark> : phrase
+    );
 }
 
 export async function fetchEndpoint (endpoint) {

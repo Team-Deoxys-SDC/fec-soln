@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { AppContext } from '../../../contexts';
+import { AppContext, QuestionContext } from '../../../contexts';
 
 import AnswerList from '../answer/list';
 import Helpful from '../../layout/Helpful';
@@ -11,18 +11,21 @@ import CreateFormModal from '../../form';
 import Row from '../../layout/Row';
 import Column from '../../layout/Column';
 import { validators } from '../../form/utils';
+import { highlight } from '../../../utils';
 
 
 export default function QuestionTile ({ question }) {
   const answers = Object.values(question.answers);
   const [showModal, setShowModal] = useState(false);
+
+  const { query } = useContext(QuestionContext);
   const { product, refetch } = useContext(AppContext);
 
   return (
     <Column style={{ marginTop: '1em' }}>
       {/* Header */}
       <Row style={{ justifyContent: 'space-between' }}>
-        <h3 style={{ margin: 0 }}>Q: {question.question_body}</h3>
+        <h3 style={{ margin: 0 }}>Q: {highlight(question.question_body, query)}</h3>
 
         <Helpful
           value={question.question_helpfulness}
