@@ -6,11 +6,11 @@ import Row from '../../layout/Row';
 import Column from '../../layout/Column';
 
 export default function Styles () {
-  const { reviewMeta } = useContext(AppContext);
+  const { product } = useContext(AppContext);
 
   return (
     <Column>
-      {Object.entries(reviewMeta.characteristics).map(([characteristic, { id, value }]) => (
+      {Object.entries(product.reviewMeta.characteristics).map(([characteristic, { id, value }]) => (
         <Column key={id}>
           <div style={{ marginBottom: '0.2em' }}>{characteristic}</div>
           <div style={{ width: '100%', height: '10px', backgroundColor: 'lightgray' }}>

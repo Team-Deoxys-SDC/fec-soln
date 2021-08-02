@@ -33,7 +33,7 @@ export default function QuestionTile ({ question }) {
             await fetch(`/api/qa/questions/${question.question_id}/helpful`, {
               method: 'PUT'
             });
-            refetch();
+            refetch({ resource: 'questions' });
           }}
           onActionClick={async () => { setShowModal(true); }}
           action="Add Answer"
@@ -57,7 +57,7 @@ export default function QuestionTile ({ question }) {
         onClick={() => { setShowModal(false); }}
         onSubmit={async () => {
           setShowModal(false);
-          await refetch();
+          await refetch({ resource: 'questions' });
         }}
       />
 

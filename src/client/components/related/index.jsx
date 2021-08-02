@@ -22,7 +22,7 @@ export default function RelatedProducts () {
             icon={FaStar}
             onClick={(_, { history }) => history.push(`/products/${product.id}`)}
             action={(event, { setShowModal }) => {
-              event.stopPropogation();
+              event.stopPropagation();
 
               setShowModal(false);
             }}
@@ -46,7 +46,7 @@ export default function RelatedProducts () {
             product={product}
             icon={TiDeleteOutline}
             action={(event) => {
-              event.stopPropogation();
+              event.stopPropagation();
 
               setFavorites(favorites.filter(favorite => favorite.id !== product.id));
               forgetFavorite(product.id);

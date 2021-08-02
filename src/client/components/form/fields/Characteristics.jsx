@@ -6,7 +6,7 @@ import Row from '../../layout/Row';
 import Column from '../../layout/Column';
 
 export default function Characteristics ({ formData, setFormData, errors }) {
-  const { reviewMeta } = useContext(AppContext);
+  const { product } = useContext(AppContext);
   const { characteristics } = formData;
 
   return (
@@ -17,7 +17,7 @@ export default function Characteristics ({ formData, setFormData, errors }) {
 
       <Column style={{ padding: '0 2em' }}>
         {/* Map over the characteristics for the given product */}
-        {Object.entries(reviewMeta.characteristics).map(([characteristic, { id }]) => (
+        {Object.entries(product.reviewMeta.characteristics).map(([characteristic, { id }]) => (
           <div key={id}>
             <h5>{characteristic}</h5>
             <Row style={{ justifyContent: 'space-around' }}>

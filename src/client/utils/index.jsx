@@ -76,12 +76,47 @@ export async function get (endpoint) {
   return response.json();
 }
 
-export async function getRelated (id) {
-  const product = await get(`/api/products/${id}`);
-  const styles = await get(`/api/products/${id}/styles`);
-  const reviews = await get(`/api/reviews?product_id=${id}&count=100000`);
+export async function getRefetch (resource, id, args) {
+  switch (resource) {
+  case 'styles': return getStyles(id);
+  case 'related': return getRelated(id);
+  case 'reviews': return getReviews(id);
+  case 'questions': return getQuestions(id);
+  case 'reviewMeta': return getReviewMeta(id);
+  default: return null;
+  }
+}
 
-  return { ...product, styles: styles.results, reviews: reviews.results };
+export async function getRelated (id) {
+  return get(`/api/products/${id}/related`);
+}
+
+export async function getReviews (id, sortedBy = "relevant") {
+  return (await get(`/api/reviews?product_id=${id}&count=100000&sort=${sortedBy}`)).results;
+}
+
+export async function getReviewMeta (id) {
+  return get(`/api/reviews/meta?product_id=${id}`);
+}
+
+export async function getStyles (id) {
+  return (await get(`/api/products/${id}/styles`)).results;
+}
+
+export async function getQuestions (id) {
+  return get(`/api/qa/questions?product_id=${id}&count=100`);
+}
+
+export async function getProduct (id) {
+  const product = await get(`/api/products/${id}`);
+
+  product.styles = await getStyles(id);
+  product.related = await getRelated(id);
+  product.reviews = await getReviews(id);
+  product.questions = await getQuestions(id);
+  product.reviewMeta = await getReviewMeta(id);
+
+  return product;
 }
 
 export function getRandomInteger (min = 0, max = 10000) {

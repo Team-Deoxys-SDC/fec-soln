@@ -7,10 +7,10 @@ import { searchHit } from '../../utils';
 import { AppContext, QuestionContext } from '../../contexts';
 
 export default function QuestionsAndAnswers () {
-  const { questions } = useContext(AppContext);
+  const { product } = useContext(AppContext);
   const [query, setQuery] = useState('');
 
-  const queriedQuestions = questions.results.filter(question => (
+  const queriedQuestions = product.results.filter(question => (
     query.length < 3 ||
     searchHit(question.question_body, query) ||
     Object

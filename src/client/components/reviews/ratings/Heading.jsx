@@ -5,9 +5,9 @@ import { averageRating } from '../../../utils';
 import Row from '../../layout/Row';
 
 export default function Heading () {
-  const { reviews } = useContext(AppContext);
+  const { product } = useContext(AppContext);
 
-  const average = averageRating(reviews);
+  const average = averageRating(product.reviews);
 
   return (
     <Row>

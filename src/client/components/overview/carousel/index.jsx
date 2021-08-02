@@ -11,14 +11,10 @@ export default function Carousel () {
   const { setFullCarousel, fullCarousel } = useContext(AppContext);
 
   const {
-    styles,
-    selectedStyle,
-    selectedPhoto,
-    thumbnailStart,
-    setThumbnailStart
+    product, selectedStyle, selectedPhoto, thumbnailStart, setThumbnailStart
   } = useContext(AppContext);
 
-  const style = styles[selectedStyle];
+  const style = product.styles[selectedStyle];
 
 
   useEffect(() => {

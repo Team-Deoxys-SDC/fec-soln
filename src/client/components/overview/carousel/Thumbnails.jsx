@@ -5,9 +5,11 @@ import Column from '../../layout/Column';
 import { ThumbnailScrollButton } from './ScrollButton';
 
 export default function Thumbnails () {
-  const { thumbnailStart, setSelectedPhoto, selectedPhoto, selectedStyle, styles } = useContext(AppContext);
+  const {
+    thumbnailStart, setSelectedPhoto, selectedPhoto, selectedStyle, product
+  } = useContext(AppContext);
 
-  const style = styles[selectedStyle];
+  const style = product.styles[selectedStyle];
 
   return (
     <Column>

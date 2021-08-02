@@ -9,10 +9,10 @@ export default function Cart () {
   const [sku, setSku] = useState('');
   const [quantity, setQuantity] = useState('');
   const [showSizes, setShowSizes] = useState(1);
-  const { styles, selectedStyle, userToken } = useContext(AppContext);
+  const { product, selectedStyle, userToken } = useContext(AppContext);
 
   // Selected style
-  const style = styles[selectedStyle];
+  const style = product.styles[selectedStyle];
 
   // Display options (get rid of duplicate sizes)
   const uniqueSkus = new Set();

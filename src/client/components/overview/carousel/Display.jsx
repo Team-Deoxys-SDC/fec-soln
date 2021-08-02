@@ -3,9 +3,9 @@ import { AppContext } from '../../../contexts';
 
 export default function Display () {
   const [zoomed, setZoomed] = useState(false);
-  const { fullCarousel, selectedPhoto, selectedStyle, styles } = useContext(AppContext);
+  const { fullCarousel, selectedPhoto, selectedStyle, product } = useContext(AppContext);
 
-  const style = styles[selectedStyle];
+  const style = product.styles[selectedStyle];
 
   return (
     <div style={{ width: '100%', display: 'flex' }}>

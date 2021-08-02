@@ -7,22 +7,22 @@ import { AppContext } from '../../../contexts';
 import { averageRating } from '../../../utils';
 
 export default function Features () {
-  const { product, reviews, styles, selectedStyle } = useContext(AppContext);
+  const { product, selectedStyle } = useContext(AppContext);
 
-  const style = styles[selectedStyle];
+  const style = product.styles[selectedStyle];
 
   return (
     <>
       {/* Stars and reviews */}
       <Row>
         <Stars
-          rating={averageRating(reviews)}
+          rating={averageRating(product.reviews)}
           starDimension="1em"
           starSpacing="0.1em"
         />
-        {reviews.length &&
+        {product.reviews.length &&
           <div style={{ paddingLeft: '1em', textDecoration: 'underline' }}>
-            Read all {reviews.length} reviews
+            Read all {product.reviews.length} reviews
           </div>
         }
       </Row>

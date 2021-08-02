@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router';
 import { AppContext } from '../contexts';
-import { get, getFavorites, getRandomInteger, getRelated } from '../utils';
+import { getFavorites, getProduct, getRandomInteger, getRefetch } from '../utils';
 
 import Header from './layout/Header';
 
@@ -13,8 +13,11 @@ import QuestionsAndAnswers from './qaa';
 function App () {
   const { params: { product: id } } = useRouteMatch();
 
+  // Cache
+  const [cache, setCache] = useState({});
+  const [refetch, setRefetch] = useState();
+
   // Product state
-  const [styles, setStyles] = useState();
   const [product, setProduct] = useState();
   const [selectedStyle, setSelectedStyle] = useState(0);
   const [selectedPhoto, setSelectedPhoto] = useState(0);
@@ -22,71 +25,44 @@ function App () {
   const [fullCarousel, setFullCarousel] = useState(false);
 
   // Product review state
-  const [reviews, setReviews] = useState();
-  const [reviewMeta, setReviewMeta] = useState();
-  const [reviewsSortedBy, setReviewsSortedBy] = useState('relevant');
-  const [reviewStarFilters, setReviewStarFilters] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false });
-
-  // QA state
-  const [questions, setQuestions] = useState();
+  const [reviewStarFilters, setReviewStarFilters] = useState({
+    1: false, 2: false, 3: false, 4: false, 5: false
+  });
 
   // Related state
   const [related, setRelated] = useState();
   const [favorites, setFavorites] = useState();
 
-  // User cookie state
-  const [refetch, setRefetch] = useState();
+  // Cookie state
   const [userToken] = useState(getRandomInteger());
 
-  // Product fetches
-  useEffect(() => get(`/api/products/${id}`).then(setProduct), [id]);
-  useEffect(() => get(`/api/products/${id}/styles`).then(styles => setStyles(styles.results)), [id]);
 
-  // Product review fetches
-  useEffect(() => get(`/api/reviews/meta?product_id=${id}`).then(setReviewMeta), [id]);
-  useEffect(() => {
-    get(`/api/reviews?product_id=${id}&count=100000&sort=${reviewsSortedBy}`)
-      .then(reviews => setReviews(reviews.results));
-  }, [reviewsSortedBy, refetch]);
+  // Product
+  useEffect(() => getProduct(id).then(setProduct), [id]);
 
-  // Question fetches
-  useEffect(() => get(`/api/qa/questions?product_id=${id}&count=100`).then(setQuestions), [id, refetch]);
+  // Refetch
+  useEffect(() => refetch && getRefetch(refetch.resource, ...(refetch.args || [])), [refetch]);
 
-  // Related fetches
-  useEffect(() => {
-    get(`/api/products/${id}/related`)
-      .then(relatedIds => Promise.all(relatedIds.map(getRelated)))
-      .then(setRelated);
-  }, [id]);
+  // Favorites
+  useEffect(() => getFavorites().then(setFavorites), []);
 
-  useEffect(() => {
-    Promise
-      .all(getFavorites().map(getRelated))
-      .then(setFavorites);
-  }, []);
-
-
-  if (!styles || !product || !reviewMeta || !reviews || !questions || !related) {
+  if (!product || !favorites) {
     return <div>Loading</div>;
   }
 
   return (
     <AppContext.Provider value={{
       userToken,
-      styles, setStyles,
-      reviews, setReviews,
+      setRefetch,
+      cache, setCache,
       product, setProduct,
       related, setRelated,
       favorites, setFavorites,
-      questions, setQuestions,
-      reviewMeta, setReviewMeta,
       fullCarousel, setFullCarousel,
       selectedStyle, setSelectedStyle,
       selectedPhoto, setSelectedPhoto,
       thumbnailStart, setThumbnailStart,
-      reviewsSortedBy, setReviewsSortedBy,
-      reviewStarFilters, setReviewStarFilters,
-      refetch: () => setRefetch(Math.random())
+      reviewStarFilters, setReviewStarFilters
     }}>
       <div style={{ padding: '0 20%' }}>
         <Header />

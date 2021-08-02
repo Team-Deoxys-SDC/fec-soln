@@ -57,7 +57,7 @@ export default function QuestionList ({ questions }) {
         onClick={() => setShowModal(false)}
         onSubmit={async () => {
           setShowModal(false);
-          await refetch();
+          await refetch({ resouce: 'questions' });
         }}
       />
     </div>

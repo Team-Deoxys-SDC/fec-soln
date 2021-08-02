@@ -58,13 +58,13 @@ export default function ReviewTile ({ review }) {
           await fetch(`/api/reviews/${review.review_id}/report`, {
             method: 'PUT'
           });
-          refetch();
+          refetch({ resource: 'reviews' });
         }}
         onHelpfulClick={async () => {
           await fetch(`/api/reviews/${review.review_id}/helpful`, {
             method: 'PUT'
           });
-          refetch();
+          refetch({ resource: 'reviews' });
         }}
       />
       <hr />

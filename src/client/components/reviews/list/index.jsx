@@ -19,16 +19,17 @@ import { REQUIRED_FIELD, validators } from '../../form/utils';
 export default function ReviewList () {
   const [showModal, setShowModal] = useState(false);
   const [displayCount, setDisplayCount] = useState(2);
+  const [reviewsSortedBy, setReviewsSortedBy] = useState('relevant');
 
   const {
-    reviews, reviewStarFilters, product, reviewsSortedBy, setReviewsSortedBy, refetch, reviewMeta
+    reviewStarFilters, product, refetch
   } = useContext(AppContext);
 
   // Handle rating filters
   const ratingFilters = new Set(flattenStarFilters(reviewStarFilters));
 
   // Filter reviews
-  const filteredReviews = reviews.filter(review => !ratingFilters.size || ratingFilters.has(review.rating));
+  const filteredReviews = product.reviews.filter(review => !ratingFilters.size || ratingFilters.has(review.rating));
 
   return (
     <div>
@@ -37,7 +38,10 @@ export default function ReviewList () {
         {' '}
         <select
           value={reviewsSortedBy}
-          onChange={(event) => setReviewsSortedBy(event.target.value)}
+          onChange={async (event) => {
+            setReviewsSortedBy(event.target.value);
+            await refetch({ resource: 'reviews', args: [event.target.value] });
+          }}
         >
           <option value="relevant">relevant</option>
           <option value="newest">newest</option>
@@ -82,7 +86,7 @@ export default function ReviewList () {
           summary: validators.EMPTY,
           characteristics: characteristics => (
             Object.keys(characteristics).length !==
-            Object.keys(reviewMeta.characteristics).length
+            Object.keys(product.reviewMeta.characteristics).length
           ) && REQUIRED_FIELD
         }}
         initial={{
@@ -100,7 +104,7 @@ export default function ReviewList () {
         onClick={() => setShowModal(false)}
         onSubmit={async () => {
           setShowModal(false);
-          await refetch();
+          await refetch({ resource: 'reviews' });
         }}
         fields={[Overall, Recommend, Characteristics, Review, Photos, User]}
       />

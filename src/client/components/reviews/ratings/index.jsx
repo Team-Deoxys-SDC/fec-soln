@@ -8,11 +8,13 @@ import Characteristics from './Characteristics';
 import { AppContext } from '../../../contexts';
 import { toPercentage } from '../../../utils';
 
-import '../../../style.css';
-
 export default function Ratings () {
-  const { reviews } = useContext(AppContext);
-  const percentRecommend = toPercentage(reviews.filter(review => review.recommend).length, reviews.length);
+  const { product } = useContext(AppContext);
+
+  const percentRecommend = toPercentage(
+    product.reviews.filter(review => review.recommend).length,
+    product.reviews.length
+  );
 
   return (
     <div>
