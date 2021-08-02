@@ -10,7 +10,8 @@ import Overview from './overview';
 import RelatedProducts from './related';
 import QuestionsAndAnswers from './qaa';
 
-function App () {
+
+export default function App () {
   const { params: { product: id } } = useRouteMatch();
 
   // Cache
@@ -41,10 +42,16 @@ function App () {
   useEffect(() => getProduct(id).then(setProduct), [id]);
 
   // Refetch
-  useEffect(() => refetch && getRefetch(refetch.resource, ...(refetch.args || [])), [refetch]);
+  useEffect(() => {
+    if (!refetch) return;
+    const { resource, args = [] } = refetch;
+
+    getRefetch(resource, args)
+      .then(data => setProduct({ ...product, [resource]: data }));
+  }, [refetch]);
 
   // Favorites
-  useEffect(() => getFavorites().then(setFavorites), []);
+  useEffect(() => setFavorites(getFavorites()), []);
 
   if (!product || !favorites) {
     return <div>Loading</div>;
@@ -53,8 +60,8 @@ function App () {
   return (
     <AppContext.Provider value={{
       userToken,
-      setRefetch,
       cache, setCache,
+      refetch, setRefetch,
       product, setProduct,
       related, setRelated,
       favorites, setFavorites,
@@ -67,7 +74,7 @@ function App () {
       <div style={{ padding: '0 20%' }}>
         <Header />
         <Overview />
-        <RelatedProducts />
+        {/* <RelatedProducts /> */}
         <QuestionsAndAnswers />
         <Reviews />
       </div>
@@ -76,4 +83,3 @@ function App () {
   );
 }
 
-export default App;

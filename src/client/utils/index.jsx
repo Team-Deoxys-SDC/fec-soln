@@ -76,13 +76,13 @@ export async function get (endpoint) {
   return response.json();
 }
 
-export async function getRefetch (resource, id, args) {
+export async function getRefetch (resource, args) {
   switch (resource) {
-  case 'styles': return getStyles(id);
-  case 'related': return getRelated(id);
-  case 'reviews': return getReviews(id);
-  case 'questions': return getQuestions(id);
-  case 'reviewMeta': return getReviewMeta(id);
+  case 'styles': return getStyles(...args);
+  case 'related': return getRelated(...args);
+  case 'reviews': return getReviews(...args);
+  case 'questions': return getQuestions(...args);
+  case 'reviewMeta': return getReviewMeta(...args);
   default: return null;
   }
 }
@@ -104,17 +104,25 @@ export async function getStyles (id) {
 }
 
 export async function getQuestions (id) {
-  return get(`/api/qa/questions?product_id=${id}&count=100`);
+  return (await get(`/api/qa/questions?product_id=${id}&count=100`)).results;
 }
 
 export async function getProduct (id) {
   const product = await get(`/api/products/${id}`);
 
-  product.styles = await getStyles(id);
-  product.related = await getRelated(id);
-  product.reviews = await getReviews(id);
-  product.questions = await getQuestions(id);
-  product.reviewMeta = await getReviewMeta(id);
+  const [styles, related, reviews, questions, reviewMeta] = await Promise.all([
+    getStyles(id),
+    getRelated(id),
+    getReviews(id),
+    getQuestions(id),
+    getReviewMeta(id)
+  ]);
+
+  product.styles = styles;
+  product.related = related;
+  product.reviews = reviews;
+  product.questions = questions;
+  product.reviewMeta = reviewMeta;
 
   return product;
 }

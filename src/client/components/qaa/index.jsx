@@ -10,7 +10,7 @@ export default function QuestionsAndAnswers () {
   const { product } = useContext(AppContext);
   const [query, setQuery] = useState('');
 
-  const queriedQuestions = product.results.filter(question => (
+  const queriedQuestions = product.questions.filter(question => (
     query.length < 3 ||
     searchHit(question.question_body, query) ||
     Object

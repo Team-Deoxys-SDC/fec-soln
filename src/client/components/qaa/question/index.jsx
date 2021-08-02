@@ -19,7 +19,7 @@ export default function QuestionTile ({ question }) {
   const [showModal, setShowModal] = useState(false);
 
   const { query } = useContext(QuestionContext);
-  const { product, refetch } = useContext(AppContext);
+  const { product, setRefetch } = useContext(AppContext);
 
   return (
     <Column style={{ marginTop: '1em' }}>
@@ -33,7 +33,7 @@ export default function QuestionTile ({ question }) {
             await fetch(`/api/qa/questions/${question.question_id}/helpful`, {
               method: 'PUT'
             });
-            refetch({ resource: 'questions' });
+            await setRefetch({ resource: 'questions', args: [product.id] });
           }}
           onActionClick={async () => { setShowModal(true); }}
           action="Add Answer"
@@ -57,7 +57,7 @@ export default function QuestionTile ({ question }) {
         onClick={() => { setShowModal(false); }}
         onSubmit={async () => {
           setShowModal(false);
-          await refetch({ resource: 'questions' });
+          await setRefetch({ resource: 'questions', args: [product.id] });
         }}
       />
 

@@ -21,9 +21,7 @@ export default function ReviewList () {
   const [displayCount, setDisplayCount] = useState(2);
   const [reviewsSortedBy, setReviewsSortedBy] = useState('relevant');
 
-  const {
-    reviewStarFilters, product, refetch
-  } = useContext(AppContext);
+  const { reviewStarFilters, product, setRefetch } = useContext(AppContext);
 
   // Handle rating filters
   const ratingFilters = new Set(flattenStarFilters(reviewStarFilters));
@@ -40,7 +38,7 @@ export default function ReviewList () {
           value={reviewsSortedBy}
           onChange={async (event) => {
             setReviewsSortedBy(event.target.value);
-            await refetch({ resource: 'reviews', args: [event.target.value] });
+            await setRefetch({ resource: 'reviews', args: [product.id, event.target.value] });
           }}
         >
           <option value="relevant">relevant</option>
@@ -104,7 +102,7 @@ export default function ReviewList () {
         onClick={() => setShowModal(false)}
         onSubmit={async () => {
           setShowModal(false);
-          await refetch({ resource: 'reviews' });
+          await setRefetch({ resource: 'reviews', args: [product.id, reviewsSortedBy] });
         }}
         fields={[Overall, Recommend, Characteristics, Review, Photos, User]}
       />

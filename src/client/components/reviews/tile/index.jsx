@@ -9,7 +9,7 @@ import { AppContext } from '../../../contexts';
 import Row from '../../layout/Row';
 
 export default function ReviewTile ({ review }) {
-  const { refetch } = useContext(AppContext);
+  const { setRefetch, product } = useContext(AppContext);
 
   return (
     <div style={{ marginTop: '2em' }}>
@@ -58,13 +58,13 @@ export default function ReviewTile ({ review }) {
           await fetch(`/api/reviews/${review.review_id}/report`, {
             method: 'PUT'
           });
-          refetch({ resource: 'reviews' });
+          await setRefetch({ resource: 'reviews', args: [product.id] });
         }}
         onHelpfulClick={async () => {
           await fetch(`/api/reviews/${review.review_id}/helpful`, {
             method: 'PUT'
           });
-          refetch({ resource: 'reviews' });
+          await setRefetch({ resource: 'reviews', args: [product.id] });
         }}
       />
       <hr />

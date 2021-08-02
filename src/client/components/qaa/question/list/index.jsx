@@ -12,7 +12,7 @@ import CreateFormModal from '../../../form';
 import { validators } from '../../../form/utils';
 
 export default function QuestionList ({ questions }) {
-  const { product, refetch } = useContext(AppContext);
+  const { product, setRefetch } = useContext(AppContext);
   const [showModal, setShowModal] = useState(false);
   const [displayCount, setDisplayCount] = useState(4);
 
@@ -57,7 +57,7 @@ export default function QuestionList ({ questions }) {
         onClick={() => setShowModal(false)}
         onSubmit={async () => {
           setShowModal(false);
-          await refetch({ resouce: 'questions' });
+          await setRefetch({ resource: 'questions', args: [product.id] });
         }}
       />
     </div>

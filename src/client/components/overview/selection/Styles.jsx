@@ -5,13 +5,13 @@ import { AppContext } from '../../../contexts';
 import Row from '../../layout/Row';
 
 export default function Styles () {
-  const { styles, selectedStyle, setSelectedStyle, selectedPhoto } = useContext(AppContext);
+  const { product, selectedStyle, setSelectedStyle, selectedPhoto } = useContext(AppContext);
 
   return (
     <div>
-      <h3>Style {'>'} {styles[selectedStyle].name}</h3>
+      <h3>Style {'>'} {product.styles[selectedStyle].name}</h3>
       <Row style={{ flexWrap: 'wrap' }}>
-        {styles.map((style, index) => {
+        {product.styles.map((style, index) => {
           const isSelected = index === selectedStyle;
           return (
             <div key={style.style_id} style={{ width: '25%' }} onClick={() => {
