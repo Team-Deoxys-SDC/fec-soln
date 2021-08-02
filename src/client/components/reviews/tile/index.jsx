@@ -12,7 +12,7 @@ export default function ReviewTile ({ review }) {
   const { setRefetch, product } = useContext(AppContext);
 
   return (
-    <div style={{ marginTop: '2em' }}>
+    <div data-testid="tile" style={{ marginTop: '2em' }}>
       {/* Heading */}
       <Row style={{ justifyContent: 'space-between' }}>
         <Stars

@@ -12,7 +12,7 @@ export default function Header () {
       background: '#232323',
       color: '#ccc'
     }}>
-      <h1>MEOWWALK</h1>
+      <h1 data-testid="header">MEOWWALK</h1>
       <ul style={{
         display: 'flex',
         justifyContent: 'space-around',

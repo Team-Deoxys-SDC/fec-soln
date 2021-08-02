@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRouteMatch } from 'react-router';
+import { useRouteMatch } from 'react-router-dom';
 import { AppContext } from '../contexts';
 import { getFavorites, getFullProduct, getProductStub, getRandomInteger, getRefetch } from '../utils';
 
@@ -38,7 +38,9 @@ export default function App () {
   const [userToken] = useState(getRandomInteger());
 
   // Product
-  useEffect(() => getFullProduct(id, cache, setCache).then(setProduct), [id]);
+  useEffect(() => {
+    getFullProduct(id, cache, setCache).then(setProduct);
+  }, [id]);
 
   // Refetch
   useEffect(() => {
@@ -54,7 +56,9 @@ export default function App () {
   }, [refetch]);
 
   // Favorites
-  useEffect(() => Promise.all(getFavorites().map(getProductStub)).then(setFavorites), []);
+  useEffect(() => {
+    Promise.all(getFavorites().map(getProductStub)).then(setFavorites);
+  }, []);
 
   if (!product || !favorites) {
     return <div>Loading</div>;

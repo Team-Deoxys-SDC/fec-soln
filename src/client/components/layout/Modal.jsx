@@ -5,7 +5,7 @@ export default function Modal ({ style = {}, children, showModal, onClick }) {
   const modal = useRef(null);
 
   useEffect(() => {
-    if (!modal.current) return;
+    if (!modal || !modal.current) return;
 
     if (showModal) modal.current.showModal();
     else modal.current.close();
