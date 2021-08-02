@@ -10,14 +10,13 @@ import { AppContext } from '../../../contexts';
 
 
 export default function RelatedTile ({
-  id,
+  product,
   icon: Icon,
   action,
   onClick = () => { },
   blank = false
 }) {
   const history = useHistory();
-  const [product, setProduct] = useState({});
   const [showModal, setShowModal] = useState(false);
   const { product: mainProduct } = useContext(AppContext);
 

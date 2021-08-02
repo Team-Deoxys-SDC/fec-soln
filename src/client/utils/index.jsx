@@ -88,7 +88,9 @@ export async function getRefetch (resource, args) {
 }
 
 export async function getRelated (id) {
-  return get(`/api/products/${id}/related`);
+  const related = await get(`/api/products/${id}/related`);
+
+  return Promise.all(related.map(getProductStub));
 }
 
 export async function getReviews (id, sortedBy = "relevant") {
@@ -108,9 +110,27 @@ export async function getQuestions (id) {
 }
 
 export async function getProduct (id) {
-  const product = await get(`/api/products/${id}`);
+  return get(`/api/products/${id}`);
+}
 
-  const [styles, related, reviews, questions, reviewMeta] = await Promise.all([
+export async function getProductStub (id) {
+  const [product, reviews, styles] = await Promise.all([
+    getProduct(id),
+    getReviews(id),
+    getStyles(id)
+  ]);
+
+  product.reviews = reviews;
+  product.styles = styles;
+
+  return product;
+}
+
+export async function getFullProduct (id, cache, setCache) {
+  if (id in cache) return cache[id];
+
+  const [product, styles, related, reviews, questions, reviewMeta] = await Promise.all([
+    getProduct(id),
     getStyles(id),
     getRelated(id),
     getReviews(id),
@@ -123,6 +143,8 @@ export async function getProduct (id) {
   product.reviews = reviews;
   product.questions = questions;
   product.reviewMeta = reviewMeta;
+
+  setCache({ ...cache, id: product });
 
   return product;
 }

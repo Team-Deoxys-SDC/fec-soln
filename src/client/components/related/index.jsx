@@ -9,18 +9,18 @@ import { AppContext } from '../../contexts';
 import { persistFavorite, forgetFavorite } from '../../utils';
 
 export default function RelatedProducts () {
-  const { favorites, setFavorites, product } = useContext(AppContext);
+  const { product, favorites, setFavorites } = useContext(AppContext);
 
   return (
     <div>
       <h1>Related Products</h1>
       <Row style={{ overflow: 'auto' }}>
-        {product.related.map(id => (
+        {product.related.map(product => (
           <RelatedTile
-            key={id}
-            id={id}
+            key={product.id}
+            product={product}
             icon={FaStar}
-            onClick={(_, { history }) => history.push(`/products/${id}`)}
+            onClick={(_, { history }) => history.push(`/products/${product.id}`)}
             action={(event, { setShowModal }) => {
               event.stopPropagation();
 
@@ -37,6 +37,7 @@ export default function RelatedProducts () {
           onClick={() => {
             setFavorites(favorites.filter(favorite => favorite.id !== product.id).concat(product));
             persistFavorite(product.id);
+            history.push(`/products/${product.id}`);
           }}
         />
 

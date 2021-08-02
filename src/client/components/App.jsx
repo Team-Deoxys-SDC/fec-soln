@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router';
 import { AppContext } from '../contexts';
-import { getFavorites, getProduct, getRandomInteger, getRefetch } from '../utils';
+import { getFavorites, getFullProduct, getProductStub, getRandomInteger, getRefetch } from '../utils';
 
 import Header from './layout/Header';
 
@@ -37,9 +37,8 @@ export default function App () {
   // Cookie state
   const [userToken] = useState(getRandomInteger());
 
-
   // Product
-  useEffect(() => getProduct(id).then(setProduct), [id]);
+  useEffect(() => getFullProduct(id, cache, setCache).then(setProduct), [id]);
 
   // Refetch
   useEffect(() => {
@@ -47,11 +46,15 @@ export default function App () {
     const { resource, args = [] } = refetch;
 
     getRefetch(resource, args)
-      .then(data => setProduct({ ...product, [resource]: data }));
+      .then(data => {
+        const updatedProduct = { ...product, [resource]: data };
+        setCache({ ...cache, [product.id]: updatedProduct });
+        setProduct(updatedProduct);
+      });
   }, [refetch]);
 
   // Favorites
-  useEffect(() => setFavorites(getFavorites()), []);
+  useEffect(() => Promise.all(getFavorites().map(getProductStub)).then(setFavorites), []);
 
   if (!product || !favorites) {
     return <div>Loading</div>;
@@ -74,7 +77,7 @@ export default function App () {
       <div style={{ padding: '0 20%' }}>
         <Header />
         <Overview />
-        {/* <RelatedProducts /> */}
+        <RelatedProducts />
         <QuestionsAndAnswers />
         <Reviews />
       </div>
