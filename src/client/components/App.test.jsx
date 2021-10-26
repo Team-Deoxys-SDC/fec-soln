@@ -4,18 +4,8 @@ import App from '../components/App';
 
 
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-
-
-jest.mock('react', () => {
-  const react = jest.requireActual('react');
-
-  return {
-    ...react,
-    useRef: () => null
-  };
-});
 
 jest.mock('react-router-dom', () => ({
   useRouteMatch: jest.fn().mockReturnValue({
@@ -25,6 +15,15 @@ jest.mock('react-router-dom', () => ({
     push: jest.fn()
   })
 }));
+
+jest.mock('react', () => {
+  const react = jest.requireActual('react');
+
+  return {
+    ...react,
+    useRef: () => null
+  };
+});
 
 jest.mock('../utils', () => {
   const product = require('../mocks/product.json');
@@ -42,8 +41,7 @@ jest.mock('../utils', () => {
   };
 });
 
-
-test('loads and indicates as such, then displays proper header', async () => {
+test('loads the component and indicates as such, then displays proper header', async () => {
   let component;
 
   await act(async () => {

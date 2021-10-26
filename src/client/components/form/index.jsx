@@ -21,9 +21,11 @@ export default function CreateFormModal ({
   return (
     <Modal showModal={showModal} onClick={onClick} style={style}>
       <Column onClick={(event) => event.stopPropagation()}>
+        {/* Titles and Subtitles */}
         <h1>{title}</h1>
         <h3>{subtitle}</h3>
 
+        {/* Form fields */}
         {fields.map((Field, index) => (
           <Field
             key={index}
