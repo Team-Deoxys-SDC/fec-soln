@@ -85,7 +85,6 @@ export default function App () {
         <QuestionsAndAnswers />
         <Reviews />
       </div>
-
     </AppContext.Provider>
   );
 }
